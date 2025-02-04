@@ -141,7 +141,7 @@ const BecomeTeacher = () => {
     <div
       className="flex justify-center items-center h-screen bg-gray-100 relative"
       style={{
-        backgroundImage: `url(${teacherBg}), linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(158, 0, 0, 0.6))`,
+        backgroundImage: { teacherBg },
         backgroundSize: "cover",
         backgroundBlendMode: "overlay",
         backgroundPosition: "center",

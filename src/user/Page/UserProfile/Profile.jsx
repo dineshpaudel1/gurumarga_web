@@ -165,7 +165,7 @@ const Profile = () => {
                 onClick={handlePhotoSubmit}
                 className="bg-blue-500 text-white px-4 py-2 rounded"
               >
-                Update Photo
+                Save
               </button>
             </div>
           </div>
@@ -218,7 +218,7 @@ const Profile = () => {
             type="submit"
             className="bg-blue-500 text-white px-4 py-2 rounded"
           >
-            Update Profile
+            Save
           </button>
         </form>
       </div>
@@ -265,7 +265,7 @@ const Profile = () => {
             type="submit"
             className="bg-blue-500 text-white px-4 py-2 rounded"
           >
-            Update Password
+            Save
           </button>
         </form>
       </div>

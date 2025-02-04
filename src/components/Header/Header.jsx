@@ -1,9 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser, faCaretDown } from "@fortawesome/free-solid-svg-icons";
+import {
+  faUser,
+  faCaretDown,
+  faShoppingCart,
+  faBell,
+} from "@fortawesome/free-solid-svg-icons";
 import logo from "../../assets/logo.png";
-import UserContext from "../../user/context/UserInfoProvider";
+import UserContext from "../context/UserInfoProvider";
 import { fetchCategories, fetchCategoryById } from "../Apis/CategoryApi";
 
 const Header = () => {
@@ -11,39 +16,51 @@ const Header = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [categoryDropdownOpen, setCategoryDropdownOpen] = useState(false);
   const [categories, setCategories] = useState([]);
+  const [cartCount, setCartCount] = useState(0);
   const navigate = useNavigate();
 
-  // Get userInfo and role from the context
   const [userInfo, fetchUserInfo, role] = useContext(UserContext);
   localStorage.setItem("role", role);
 
   useEffect(() => {
-    // Check for token in localStorage on page load
     const token = localStorage.getItem("token");
-    if (!token) {
-      handleLogout(); // Log out if no token
-    }
+    if (!token) handleLogout();
 
     const storedUsername = localStorage.getItem("username");
-    if (storedUsername) {
-      setUsername(storedUsername);
-    }
+    if (storedUsername) setUsername(storedUsername);
 
-    // Fetch categories using the new API function
     fetchCategories()
-      .then((data) => {
-        setCategories(data);
-      })
+      .then((data) => setCategories(data))
       .catch((error) => console.error(error));
+
+    const storedCart = localStorage.getItem("cart");
+    if (storedCart) {
+      const cartItems = JSON.parse(storedCart);
+      const totalItems = cartItems.reduce(
+        (sum, item) => sum + (item.quantity || 1),
+        0
+      );
+      setCartCount(totalItems);
+    }
   }, []);
 
-  // Function to fetch category by ID and navigate to its page
+  const updateCartCount = () => {
+    const storedCart = localStorage.getItem("cart");
+    if (storedCart) {
+      const cartItems = JSON.parse(storedCart);
+      const totalItems = cartItems.reduce(
+        (sum, item) => sum + (item.quantity || 1),
+        0
+      );
+      setCartCount(totalItems);
+    }
+    window.location.reload();
+  };
+
   const handleCategoryClick = (categoryId) => {
     fetchCategoryById(categoryId)
       .then((category) => {
-        navigate(`/categories/${categoryId}`, {
-          state: { category },
-        });
+        navigate(`/categories/${categoryId}`, { state: { category } });
       })
       .catch((error) => console.error(error));
   };
@@ -56,21 +73,11 @@ const Header = () => {
     navigate("/");
   };
 
-  const toggleDropdown = () => {
-    setDropdownOpen(!dropdownOpen);
-  };
-
-  const closeDropdown = () => {
-    setDropdownOpen(false);
-  };
-
-  const toggleCategoryDropdown = () => {
+  const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
+  const closeDropdown = () => setDropdownOpen(false);
+  const toggleCategoryDropdown = () =>
     setCategoryDropdownOpen(!categoryDropdownOpen);
-  };
-
-  const closeCategoryDropdown = () => {
-    setCategoryDropdownOpen(false);
-  };
+  const closeCategoryDropdown = () => setCategoryDropdownOpen(false);
 
   return (
     <header className="bg-white shadow-sm py-4 fixed top-0 left-0 right-0 z-50">
@@ -82,7 +89,6 @@ const Header = () => {
                 <img src={logo} alt="Logo" className="h-[60px]" />
               </Link>
 
-              {/* Categories Dropdown */}
               <div className="relative">
                 <button
                   onClick={toggleCategoryDropdown}
@@ -108,12 +114,34 @@ const Header = () => {
             </div>
           </nav>
         </div>
+
         <div className="flex items-center space-x-4">
           <input
             type="text"
             placeholder="Search"
             className="border rounded-md py-2 px-4 text-gray-600 focus:outline-none focus:ring focus:ring-indigo-300"
           />
+
+          <FontAwesomeIcon
+            icon={faBell}
+            className="text-xl text-gray-600 cursor-pointer hover:text-indigo-500"
+          />
+
+          <Link to="/cart" className="relative">
+            <FontAwesomeIcon
+              icon={faShoppingCart}
+              className="ml-2 text-xl cursor-pointer"
+            />
+            <span className="absolute top-[-10px] right-[-10px] bg-red-500 text-white text-xs rounded-full px-1 py-0.3">
+              {cartCount}
+            </span>
+          </Link>
+
+          {(role === "ROLE_USER" || !role) && (
+            <Link to="/becometeacher" className="ml-4 text-[#1a237e]">
+              Become Teacher
+            </Link>
+          )}
 
           {username ? (
             <div className="relative">
@@ -157,15 +185,13 @@ const Header = () => {
                     </>
                   )}
                   {role === "ROLE_TEACHER" && (
-                    <>
-                      <Link
-                        to="/admin"
-                        className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
-                        onClick={closeDropdown}
-                      >
-                        Teacher Panel
-                      </Link>
-                    </>
+                    <Link
+                      to="teacher"
+                      className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+                      onClick={closeDropdown}
+                    >
+                      Teacher Panel
+                    </Link>
                   )}
                   <button
                     onClick={() => {

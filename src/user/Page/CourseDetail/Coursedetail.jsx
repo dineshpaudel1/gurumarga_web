@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { fetchCourses } from "../../../components/Apis/CourseApi";
 import axios from "axios";
-import StarRating from "../StarRating";
 
 const CourseDetail = () => {
   const { id } = useParams();
@@ -91,7 +90,7 @@ const CourseDetail = () => {
             <img
               src={
                 course.thumbnail
-                  ? `http://localhost:8080/${course.thumbnail}`
+                  ? `http://localhost:8080${course.thumbnail}`
                   : "/path/to/placeholder-image.jpg"
               }
               alt={course.courseTitle || "Course Thumbnail"}

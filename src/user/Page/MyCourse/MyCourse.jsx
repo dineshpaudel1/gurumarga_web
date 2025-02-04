@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
-import UserContext from "../../context/UserInfoProvider";
+import UserContext from "../../../components/context/UserInfoProvider";
 import TeacherImage from "../../../assets/teacher.webp"; // Add your teacher image path here
 
 const MyCourse = () => {

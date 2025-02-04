@@ -6,7 +6,7 @@ import Home from "./user/Page/HomePage/Home";
 import Login from "./components/login/Login";
 import Signup from "./components/Signup/Signup";
 import Profile from "./user/Page/UserProfile/Profile";
-import { UserInfoProvider } from "./user/context/UserInfoProvider";
+import { UserInfoProvider } from "./components/context/UserInfoProvider";
 import AdminLayout from "./AdminLayout"; // Update the path if necessary
 import Dashboard from "./admin/Pages/Dashboard";
 import Coursedetail from "./user/Page/CourseDetail/Coursedetail";
@@ -21,6 +21,11 @@ import CategoryInfo from "./user/Page/CategoryInfo/CategoryInfo";
 import CategoryAdmin from "./admin/Pages/CategoryAdmin";
 import MyCourse from "./user/Page/MyCourse/MyCourse";
 import BecomeTeacher from "./user/Page/BecomeTeacher/BecomeTeacher";
+import Cart from "./user/Page/Cart/Cart";
+import TeacherLayout from "./TeacherLayout";
+import TeacherDashboard from "./teacher/Pages/TeacherDashboard";
+import TeacherCourses from "./teacher/Pages/TeacherCourses";
+import MasterAdmin from "./admin/Pages/MasterAdmin";
 
 function App() {
   return (
@@ -40,17 +45,25 @@ function App() {
             <Route path="/categories/:id" element={<CategoryInfo />} />
             <Route path="mycourse" element={<MyCourse />} />
             <Route path="becometeacher" element={<BecomeTeacher />} />
+            <Route path="cart" element={<Cart />} />
           </Route>
 
           {/* Admin routes */}
           <Route path="/admin" element={<AdminLayout />}>
             <Route index element={<Dashboard />} />
-            <Route path="dashboard" element={<Dashboard />} />
             <Route path="courseadmin" element={<CourseAdmin />} />
             <Route path="settingadmin" element={<SettingAdmin />} />
             <Route path="useradmin" element={<UserAdmin />} />
             <Route path="enrollmentadmin" element={<EnrollmentAdmin />} />
             <Route path="categoryadmin" element={<CategoryAdmin />} />
+            <Route path="dashboard" element={<Dashboard />} />
+          </Route>
+
+          <Route path="/teacher" element={<TeacherLayout />}>
+            <Route index element={<TeacherDashboard />} />
+            <Route path="dashboard" element={<TeacherDashboard />} />
+            <Route path="settingadmin" element={<SettingAdmin />} />
+            <Route path="teachercourse" element={<TeacherCourses />} />
           </Route>
         </Routes>
       </BrowserRouter>
