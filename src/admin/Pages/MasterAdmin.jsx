@@ -1,25 +1,28 @@
 import React, { useEffect, useState } from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBell } from "@fortawesome/free-solid-svg-icons";
 import {
   FaBars,
   FaTachometerAlt,
   FaBook,
   FaUserGraduate,
 } from "react-icons/fa";
-import notification from "../../assets/notifi.webp";
 import { fetchUserInfo } from "../../components/Apis/UserApi";
+import axios from "axios";
 
 const MasterAdmin = () => {
   const [userInfo, setUserInfo] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [requests, setRequests] = useState([]);
   const navigate = useNavigate();
+
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
     const getUserInfo = async () => {
-      const token = localStorage.getItem("token");
-
       if (!token) {
         setError("No token found");
         setLoading(false);
@@ -37,14 +40,25 @@ const MasterAdmin = () => {
       }
     };
 
-    getUserInfo();
-  }, []);
+    const fetchRequests = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:8080/api/admin/viewUnApproved",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        setRequests(response.data);
+      } catch (error) {
+        console.error("Error fetching requests:", error);
+      }
+    };
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("username");
-    navigate("/");
-  };
+    getUserInfo();
+    fetchRequests();
+  }, [token]);
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -56,7 +70,6 @@ const MasterAdmin = () => {
 
   return (
     <div className="flex h-screen bg-[#F3E5F5]">
-      {/* Sidebar */}
       <aside
         className={`${
           isSidebarOpen ? "w-64" : "w-16"
@@ -93,24 +106,26 @@ const MasterAdmin = () => {
         </nav>
       </aside>
 
-      {/* Main Content */}
       <div className="flex-1 flex flex-col">
-        {/* Navbar */}
         <header className="bg-white shadow-md p-4 flex justify-between items-center">
           <h1 className="text-2xl font-bold text-[#1a237e]">Admin Dashboard</h1>
           <div className="flex items-center space-x-4">
-            {" "}
-            {/* Removed ml-auto */}
             <input
               type="text"
               placeholder="Search..."
               className="border border-gray-300 px-3 py-2 rounded bg-gray-200"
             />
-            <img
-              src={notification}
-              alt="Notifications"
-              className="w-8 h-8 cursor-pointer"
-            />
+            <Link to="adminnotification" className="relative">
+              <FontAwesomeIcon
+                icon={faBell}
+                className="text-xl text-gray-600"
+              />
+              {requests.length > 0 && (
+                <span className="absolute top-[-5px] right-[-5px] bg-red-500 text-white px-1 py-0.5 rounded-full text-xs">
+                  {requests.length}
+                </span>
+              )}
+            </Link>
             <Link to="/" className="flex items-center">
               <h1>Student</h1>
             </Link>

@@ -48,7 +48,7 @@ const TeacherDashboard = () => {
   };
 
   const handleEnrolledUserClick = () => {
-    navigate("/admin/enrollmentadmin");
+    navigate("/teacher/enrolleduser");
   };
 
   return (

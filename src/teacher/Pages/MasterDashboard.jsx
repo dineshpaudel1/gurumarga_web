@@ -85,7 +85,7 @@ const MasterDashboard = ({ children }) => {
               </Link>
             </li>
             <li className="p-4 hover:bg-[#5e17eb] flex items-center">
-              <Link to="enrollmentadmin" className="flex items-center">
+              <Link to="enrolleduser" className="flex items-center">
                 <FaUserGraduate className="mr-2" />
                 {isSidebarOpen && <span>Enrollment</span>}
               </Link>

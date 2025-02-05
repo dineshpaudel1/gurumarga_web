@@ -16,7 +16,6 @@ import EnrollmentUser from "./user/Page/EnrollmentUser/EnrollmentUser";
 import TeacherSection from "./user/Page/HomePage/TeacherSection";
 import EsewaPayment from "./user/Page/EsewaPayment/EsewaPayment";
 import UserAdmin from "./admin/Pages/UserAdmin";
-import EnrollmentAdmin from "./admin/Pages/EnrollmentAdmin";
 import CategoryInfo from "./user/Page/CategoryInfo/CategoryInfo";
 import CategoryAdmin from "./admin/Pages/CategoryAdmin";
 import MyCourse from "./user/Page/MyCourse/MyCourse";
@@ -26,6 +25,8 @@ import TeacherLayout from "./TeacherLayout";
 import TeacherDashboard from "./teacher/Pages/TeacherDashboard";
 import TeacherCourses from "./teacher/Pages/TeacherCourses";
 import MasterAdmin from "./admin/Pages/MasterAdmin";
+import EnrolledUser from "./teacher/Pages/EnrolledUser";
+import AdminNotification from "./admin/Pages/AdminNotification";
 
 function App() {
   return (
@@ -54,9 +55,9 @@ function App() {
             <Route path="courseadmin" element={<CourseAdmin />} />
             <Route path="settingadmin" element={<SettingAdmin />} />
             <Route path="useradmin" element={<UserAdmin />} />
-            <Route path="enrollmentadmin" element={<EnrollmentAdmin />} />
             <Route path="categoryadmin" element={<CategoryAdmin />} />
             <Route path="dashboard" element={<Dashboard />} />
+            <Route path="adminnotification" element={<AdminNotification />} />
           </Route>
 
           <Route path="/teacher" element={<TeacherLayout />}>
@@ -64,6 +65,7 @@ function App() {
             <Route path="dashboard" element={<TeacherDashboard />} />
             <Route path="settingadmin" element={<SettingAdmin />} />
             <Route path="teachercourse" element={<TeacherCourses />} />
+            <Route path="enrolleduser" element={<EnrolledUser />} />
           </Route>
         </Routes>
       </BrowserRouter>

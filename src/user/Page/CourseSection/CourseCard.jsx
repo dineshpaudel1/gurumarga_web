@@ -1,15 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { FaStar } from "react-icons/fa"; // Importing the star icon
+import { FaStar } from "react-icons/fa";
 
 const CourseCard = ({ course }) => {
-  const [message, setMessage] = useState("");
-
   const addToCart = () => {
-    // Get existing cart from localStorage or initialize an empty array
     const existingCart = JSON.parse(localStorage.getItem("cart")) || [];
-
-    // Check if the course is already in the cart
     const isCourseInCart = existingCart.some((item) => item.id === course.id);
 
     if (isCourseInCart) {
@@ -17,21 +12,14 @@ const CourseCard = ({ course }) => {
       return;
     }
 
-    // Add the course to the cart
-    const updatedCart = [
-      ...existingCart,
-      { ...course, quantity: 1 }, // Add default quantity of 1
-    ];
-
-    // Save updated cart in localStorage
+    const updatedCart = [...existingCart, { ...course, quantity: 1 }];
     localStorage.setItem("cart", JSON.stringify(updatedCart));
-
     alert("Course added to cart!");
   };
 
   return (
     <div className="bg-white shadow-md rounded-lg flex-shrink-0 w-72">
-      <Link>
+      <Link to={`/coursedetail/${course.id}`}>
         <img
           src={`http://localhost:8080${course.thumbnail}`}
           alt="Course Thumbnail"
@@ -49,7 +37,6 @@ const CourseCard = ({ course }) => {
             Category: <span className="font-medium">{course.category}</span>
           </p>
 
-          {/* Rating Design */}
           <div className="flex items-center mt-2">
             <FaStar className="w-4 h-4 text-yellow-500" />
             <span className="ml-1 text-yellow-500">4.7</span>

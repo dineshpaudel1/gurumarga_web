@@ -6,6 +6,7 @@ import {
   updateCourse,
 } from "../../components/Apis/CourseApi";
 import AddCourseModal from "../../admin/Model/CourseModel/AddCourseModel";
+import AddCourse from "../Model/AddCourse";
 import EditCourseModal from "../../admin/Model/CourseModel/EditCourseModel";
 const TeacherCourses = () => {
   const [courses, setCourses] = useState([]);
@@ -143,7 +144,7 @@ const TeacherCourses = () => {
         </table>
       </div>
 
-      <AddCourseModal
+      <AddCourse
         isOpen={isAddModalOpen}
         onClose={() => setIsAddModalOpen(false)}
         onCourseAdded={handleCourseAdded}
