@@ -1,9 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { FaEdit, FaTrash, FaPlus } from "react-icons/fa";
 import { fetchCourses, deleteCourse, updateCourse } from "../../Apis/CourseApi";
 import AddCourse from "../../pages/teacher/AddCourse";
 import EditCourseModal from "../../pages/teacher/EditCourseModel";
+import CourseContext from "../../context/CourseInfoProvider";
+
 const TeacherCourses = () => {
+  const { deleteCourse } = useContext(CourseContext);
+
   const [courses, setCourses] = useState([]);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -130,7 +134,7 @@ const TeacherCourses = () => {
                   </button>
                   <button
                     className="bg-red-500 text-white p-2 rounded flex items-center"
-                    onClick={() => handleDeleteCourse(course.id)}
+                    onClick={() => deleteCourse(course.id)}
                   >
                     <FaTrash className="mr-1" /> Delete
                   </button>

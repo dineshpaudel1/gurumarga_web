@@ -9,18 +9,16 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import logo from "../../assets/logo.png";
 import UserContext from "../../context/UserInfoProvider";
-import { fetchCategories, fetchCategoryById } from "../../Apis/CategoryApi";
+import { fetchCategoryById } from "../../Apis/CategoryApi";
 
 const Header = () => {
   const [username, setUsername] = useState(null);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [categoryDropdownOpen, setCategoryDropdownOpen] = useState(false);
-  const [categories, setCategories] = useState([]);
   const [cartCount, setCartCount] = useState(0);
   const navigate = useNavigate();
 
-  const [userInfo, fetchUserInfo, role] = useContext(UserContext);
-  localStorage.setItem("role", role);
+  const [userInfo, fetchUserInfo, role, categoryInfo] = useContext(UserContext);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -28,10 +26,6 @@ const Header = () => {
 
     const storedUsername = localStorage.getItem("username");
     if (storedUsername) setUsername(storedUsername);
-
-    fetchCategories()
-      .then((data) => setCategories(data))
-      .catch((error) => console.error(error));
 
     const storedCart = localStorage.getItem("cart");
     if (storedCart) {
@@ -94,12 +88,12 @@ const Header = () => {
                   onClick={toggleCategoryDropdown}
                   className="text-[#1a237e] hover:text-gray-800 flex items-center focus:outline-none"
                 >
-                  Categories
+                  Category
                   <FontAwesomeIcon icon={faCaretDown} className="ml-2" />
                 </button>
                 {categoryDropdownOpen && (
                   <div className="absolute left-0 mt-2 w-48 bg-white border rounded-lg shadow-lg z-50">
-                    {categories.map((category) => (
+                    {categoryInfo.map((category) => (
                       <button
                         key={category.id}
                         onClick={() => handleCategoryClick(category.id)}

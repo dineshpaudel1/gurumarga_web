@@ -22,45 +22,48 @@ import EnrolledUser from "./components/teacher/EnrolledUser";
 import AdminNotification from "./components/admin/AdminNotification";
 import MasterTeacher from "./components/teacher/MasterTeacher";
 import MasterPage from "./components/student/MasterPage";
+import { CourseInfoProvider } from "./context/CourseInfoProvider";
 
 function App() {
   return (
     <UserInfoProvider>
-      <BrowserRouter>
-        <Routes>
-          {/* User routes */}
+      <CourseInfoProvider>
+        <BrowserRouter>
+          <Routes>
+            {/* User routes */}
 
-          <Route path="/" element={<MasterPage />}>
-            <Route index element={<Home />} />
-            <Route path="login" element={<Login />} />
-            <Route path="signup" element={<Signup />} />
-            <Route path="profile" element={<Profile />} />
-            <Route path="/coursedetail/:id" element={<Coursedetail />} />
-            <Route path="enrollmentuser" element={<EnrollmentUser />} />
-            <Route path="teachersection" element={<TeacherSection />} />
-            <Route path="becometeacher" element={<BecomeTeacher />} />
-            <Route path="cart" element={<Cart />} />
-          </Route>
+            <Route path="/" element={<MasterPage />}>
+              <Route index element={<Home />} />
+              <Route path="login" element={<Login />} />
+              <Route path="signup" element={<Signup />} />
+              <Route path="profile" element={<Profile />} />
+              <Route path="/coursedetail/:id" element={<Coursedetail />} />
+              <Route path="enrollmentuser" element={<EnrollmentUser />} />
+              <Route path="teachersection" element={<TeacherSection />} />
+              <Route path="becometeacher" element={<BecomeTeacher />} />
+              <Route path="cart" element={<Cart />} />
+            </Route>
 
-          {/* Admin routes */}
-          <Route path="/admin" element={<MasterAdmin />}>
-            <Route index element={<Dashboard />} />
-            <Route path="settingadmin" element={<SettingAdmin />} />
-            <Route path="useradmin" element={<UserAdmin />} />
-            <Route path="categoryadmin" element={<CategoryAdmin />} />
-            <Route path="dashboard" element={<Dashboard />} />
-            <Route path="adminnotification" element={<AdminNotification />} />
-          </Route>
+            {/* Admin routes */}
+            <Route path="/admin" element={<MasterAdmin />}>
+              <Route index element={<Dashboard />} />
+              <Route path="settingadmin" element={<SettingAdmin />} />
+              <Route path="useradmin" element={<UserAdmin />} />
+              <Route path="categoryadmin" element={<CategoryAdmin />} />
+              <Route path="dashboard" element={<Dashboard />} />
+              <Route path="adminnotification" element={<AdminNotification />} />
+            </Route>
 
-          <Route path="/teacher" element={<MasterTeacher />}>
-            <Route index element={<TeacherDashboard />} />
-            <Route path="dashboard" element={<TeacherDashboard />} />
-            <Route path="settingadmin" element={<SettingAdmin />} />
-            <Route path="teachercourse" element={<TeacherCourses />} />
-            <Route path="enrolleduser" element={<EnrolledUser />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+            <Route path="/teacher" element={<MasterTeacher />}>
+              <Route index element={<TeacherDashboard />} />
+              <Route path="dashboard" element={<TeacherDashboard />} />
+              <Route path="settingadmin" element={<SettingAdmin />} />
+              <Route path="teachercourse" element={<TeacherCourses />} />
+              <Route path="enrolleduser" element={<EnrolledUser />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </CourseInfoProvider>
     </UserInfoProvider>
   );
 }
