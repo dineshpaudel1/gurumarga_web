@@ -7,7 +7,6 @@ import Login from "./components/login/Login";
 import Signup from "./components/Signup/Signup";
 import Profile from "./user/Page/UserProfile/Profile";
 import { UserInfoProvider } from "./components/context/UserInfoProvider";
-import AdminLayout from "./AdminLayout"; // Update the path if necessary
 import Dashboard from "./admin/Pages/Dashboard";
 import Coursedetail from "./user/Page/CourseDetail/Coursedetail";
 import CourseAdmin from "./admin/Pages/CourseAdmin";
@@ -21,12 +20,12 @@ import CategoryAdmin from "./admin/Pages/CategoryAdmin";
 import MyCourse from "./user/Page/MyCourse/MyCourse";
 import BecomeTeacher from "./user/Page/BecomeTeacher/BecomeTeacher";
 import Cart from "./user/Page/Cart/Cart";
-import TeacherLayout from "./TeacherLayout";
 import TeacherDashboard from "./teacher/Pages/TeacherDashboard";
 import TeacherCourses from "./teacher/Pages/TeacherCourses";
 import MasterAdmin from "./admin/Pages/MasterAdmin";
 import EnrolledUser from "./teacher/Pages/EnrolledUser";
 import AdminNotification from "./admin/Pages/AdminNotification";
+import MasterTeacher from "./teacher/Pages/MasterTeacher";
 
 function App() {
   return (
@@ -50,7 +49,7 @@ function App() {
           </Route>
 
           {/* Admin routes */}
-          <Route path="/admin" element={<AdminLayout />}>
+          <Route path="/admin" element={<MasterAdmin />}>
             <Route index element={<Dashboard />} />
             <Route path="courseadmin" element={<CourseAdmin />} />
             <Route path="settingadmin" element={<SettingAdmin />} />
@@ -60,7 +59,7 @@ function App() {
             <Route path="adminnotification" element={<AdminNotification />} />
           </Route>
 
-          <Route path="/teacher" element={<TeacherLayout />}>
+          <Route path="/teacher" element={<MasterTeacher />}>
             <Route index element={<TeacherDashboard />} />
             <Route path="dashboard" element={<TeacherDashboard />} />
             <Route path="settingadmin" element={<SettingAdmin />} />

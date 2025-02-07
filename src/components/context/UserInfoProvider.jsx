@@ -41,7 +41,7 @@ export const UserInfoProvider = ({ children }) => {
       } else {
         localStorage.removeItem("token");
         console.log("Token removed");
-        setUserInfo(null); // Clear user info if token is removed
+        setUserInfo(null); 
       }
     } catch (error) {
       console.error("Error checking the API:", error);

@@ -1,15 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { loginUser } from "../Apis/UserApi"; // Importing loginUser function
-import useUserInfo from "../../user/hooks/useUserInfo";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
-
-  const [userInfo, fetchUserInfo] = useUserInfo();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -19,9 +16,6 @@ const Login = () => {
 
       localStorage.setItem("token", data.accessToken); // Save the token in localStorage
       localStorage.setItem("username", username); // Save the username in localStorage
-
-      fetchUserInfo(); // Optionally fetch user info after login
-      console.log("Login successful", data);
 
       navigate("/"); // Redirect to the homepage
       window.location.reload(); // Reload the page to update the header

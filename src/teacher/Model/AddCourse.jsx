@@ -52,7 +52,6 @@ const AddCourse = ({ isOpen, onClose, refreshCourses }) => {
       courseDescription,
       category,
       price,
-      instructor,
       language,
       videoLink,
     };

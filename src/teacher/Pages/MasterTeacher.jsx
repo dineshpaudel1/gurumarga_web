@@ -10,7 +10,7 @@ import notification from "../../assets/notifi.webp";
 import logo from "../../assets/logo.png";
 import { fetchUserInfo } from "../../components/Apis/UserApi";
 
-const MasterDashboard = ({ children }) => {
+const MasterTeacher = ({ children }) => {
   const [userInfo, setUserInfo] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -138,4 +138,4 @@ const MasterDashboard = ({ children }) => {
   );
 };
 
-export default MasterDashboard;
+export default MasterTeacher;
