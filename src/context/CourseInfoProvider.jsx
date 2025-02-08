@@ -2,24 +2,25 @@ import React, { createContext, useState, useEffect } from "react";
 import axios from "axios";
 
 const CourseContext = createContext();
+const BASE_URL = "http://localhost:8080/api";
 
 export const CourseInfoProvider = ({ children }) => {
   const [courses, setCourses] = useState([]);
-  const [topcourses, setTopCourses] = useState([]);
+  const [categoryInfo, setCategoryInfo] = useState([]);
 
   useEffect(() => {
     fetchCourses();
+    fetchCategories();
   }, []);
 
   const fetchCourses = async () => {
     try {
-      const response = await fetch("http://localhost:8080/api/users/courses");
+      const response = await fetch(`${BASE_URL}/users/courses`);
       if (!response.ok) {
         throw new Error("Failed to fetch courses");
       }
       const data = await response.json();
       setCourses(data);
-      console.log(data);
     } catch (error) {
       console.error("Error fetching courses:", error);
     }
@@ -27,7 +28,7 @@ export const CourseInfoProvider = ({ children }) => {
 
   const deleteCourse = async (id, accessToken) => {
     try {
-      const response = await fetch(`http://localhost:8080/api/teacher/${id}`, {
+      const response = await fetch(`${BASE_URL}/teacher/${id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -49,7 +50,7 @@ export const CourseInfoProvider = ({ children }) => {
     formData.append("file", thumbnail);
 
     try {
-      const response = await fetch("http://localhost:8080/api/teacher/add", {
+      const response = await fetch(`${BASE_URL}/teacher/add`, {
         method: "POST",
         headers: { Authorization: `Bearer ${accessToken}` },
         body: formData,
@@ -79,14 +80,11 @@ export const CourseInfoProvider = ({ children }) => {
     }
 
     try {
-      const response = await fetch(
-        `http://localhost:8080/api/admin/${courseId}`,
-        {
-          method: "POST",
-          headers: { Authorization: `Bearer ${accessToken}` },
-          body: formData,
-        }
-      );
+      const response = await fetch(`${BASE_URL}/admin/${courseId}`, {
+        method: "POST",
+        headers: { Authorization: `Bearer ${accessToken}` },
+        body: formData,
+      });
 
       if (!response.ok) {
         throw new Error(await response.text());
@@ -103,9 +101,25 @@ export const CourseInfoProvider = ({ children }) => {
     }
   };
 
+  const fetchCategories = async () => {
+    try {
+      const response = await axios.get(`${BASE_URL}/users/category`);
+      setCategoryInfo(response.data);
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+    }
+  };
+
   return (
     <CourseContext.Provider
-      value={{ courses, fetchCourses, deleteCourse, addCourse, updateCourse }}
+      value={{
+        courses,
+        categoryInfo,
+        fetchCourses,
+        deleteCourse,
+        addCourse,
+        updateCourse,
+      }}
     >
       {children}
     </CourseContext.Provider>

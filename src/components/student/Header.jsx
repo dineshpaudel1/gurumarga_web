@@ -18,7 +18,7 @@ const Header = () => {
   const [cartCount, setCartCount] = useState(0);
   const navigate = useNavigate();
 
-  const [userInfo, fetchUserInfo, role, categoryInfo] = useContext(UserContext);
+  const [userInfo, fetchUserInfo, role] = useContext(UserContext);
 
   useEffect(() => {
     const token = localStorage.getItem("token");

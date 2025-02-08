@@ -8,18 +8,8 @@ export const UserInfoProvider = ({ children }) => {
   const [userInfo, setUserInfo] = useState(null);
   const [role, setRole] = useState("");
   const [id, setId] = useState(null);
-  const [categoryInfo, setCategoryInfo] = useState([]);
 
   const token = localStorage.getItem("token");
-
-  const fetchCategories = async () => {
-    try {
-      const response = await axios.get(`${BASE_URL}/api/users/category`);
-      setCategoryInfo(response.data);
-    } catch (error) {
-      console.error("Error fetching categories:", error);
-    }
-  };
 
   const fetchUserInfo = async () => {
     if (!token) return; // Prevent API call if no token is found
@@ -67,10 +57,9 @@ export const UserInfoProvider = ({ children }) => {
   useEffect(() => {
     fetchUserInfo();
     checkServer();
-    fetchCategories(); // Corrected function call
   }, [token]);
 
-  const contextValue = [userInfo, fetchUserInfo, role, categoryInfo];
+  const contextValue = [userInfo, fetchUserInfo, role];
 
   return (
     <UserContext.Provider value={contextValue}>{children}</UserContext.Provider>

@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { FaEdit, FaTrash, FaPlus } from "react-icons/fa";
 import AddCategoryModal from "../../pages/admin/AddCategoryModel";
 import EditCategoryModal from "../../pages/admin/EditCategoryModel"; // Import the edit modal
 import { fetchCategories, fetchCategoryById } from "../../Apis/CategoryApi";
 import axios from "axios";
+import CourseContext from "../../context/CourseInfoProvider";
 
 const CategoryAdmin = () => {
+  const { categoryInfo } = useContext(CourseContext);
+
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
