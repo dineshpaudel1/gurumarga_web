@@ -3,7 +3,6 @@ import axios from "axios";
 
 const AddCategoryModal = ({ isOpen, onClose, onAddCategory }) => {
   const [categoryName, setCategoryName] = useState("");
-  const [categoryPhoto, setCategoryPhoto] = useState(null);
   const token = localStorage.getItem("token");
 
   const handleFileChange = (e) => {
@@ -12,21 +11,23 @@ const AddCategoryModal = ({ isOpen, onClose, onAddCategory }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const formData = new FormData();
-    formData.append("category", JSON.stringify({ categoryName }));
-    formData.append("file", categoryPhoto);
+
+    const categoryData = {
+      categoryName,
+    };
 
     try {
       const response = await axios.post(
-        "http://localhost:8080/api/users/addcategory",
-        formData,
+        "http://localhost:8080/api/admin/addcategory",
+        categoryData, // Send JSON directly
         {
           headers: {
             Authorization: `Bearer ${token}`,
-            "Content-Type": "multipart/form-data",
+            "Content-Type": "application/json", // Ensure JSON format
           },
         }
       );
+
       if (response.status === 200) {
         onAddCategory(response.data);
         onClose();
@@ -52,18 +53,6 @@ const AddCategoryModal = ({ isOpen, onClose, onAddCategory }) => {
               id="categoryName"
               value={categoryName}
               onChange={(e) => setCategoryName(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded mt-1"
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label htmlFor="categoryPhoto" className="block text-gray-700">
-              Category Photo
-            </label>
-            <input
-              type="file"
-              id="categoryPhoto"
-              onChange={handleFileChange}
               className="w-full p-2 border border-gray-300 rounded mt-1"
               required
             />

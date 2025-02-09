@@ -25,14 +25,14 @@ const EditCategoryModal = ({
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append("category", JSON.stringify({ categoryName }));
+    formData.append("data", JSON.stringify({ id: categoryId, categoryName })); // Send data as a string
     if (categoryPhoto) {
-      formData.append("file", categoryPhoto);
+      formData.append("photo", categoryPhoto); // Include photo if selected
     }
 
     try {
-      const response = await axios.post(
-        `http://localhost:8080/api/users/${categoryId}`,
+      const response = await axios.patch(
+        `http://localhost:8080/api/admin/category/updatePhoto`,
         formData,
         {
           headers: {
