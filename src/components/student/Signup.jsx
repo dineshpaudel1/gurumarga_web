@@ -32,19 +32,21 @@ const Signup = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-[150px] mb-6 p-6 bg-white rounded-lg shadow-md">
-      <h2 className="text-2xl font-bold mb-6 text-center">
-        Sign Up for GuruMarga
-      </h2>
+    <div className="max-w-lg mx-auto mt-[100px] p-8 bg-white rounded-xl shadow-lg">
+      {/* Optional: Add logo or banner */}
+      <div className="text-center mb-6">
+        <h2 className="text-3xl font-semibold text-gray-900 mt-4">Sign Up for GuruMarga</h2>
+      </div>
+
       <form onSubmit={handleSignup}>
-        <div className="mb-4">
-          <label
-            htmlFor="fullName"
-            className="block text-sm font-medium leading-6 text-gray-900"
-          >
-            Full Name
-          </label>
-          <div className="mt-2">
+        <div className="space-y-4">
+          <div className="mb-4">
+            <label
+              htmlFor="fullName"
+              className="block text-sm font-medium text-gray-900"
+            >
+              Full Name
+            </label>
             <input
               id="fullName"
               name="fullName"
@@ -53,19 +55,17 @@ const Signup = () => {
               required
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
-              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              className="block w-full p-3 mt-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-600"
             />
           </div>
-        </div>
 
-        <div className="mb-4">
-          <label
-            htmlFor="username"
-            className="block text-sm font-medium leading-6 text-gray-900"
-          >
-            Username
-          </label>
-          <div className="mt-2">
+          <div className="mb-4">
+            <label
+              htmlFor="username"
+              className="block text-sm font-medium text-gray-900"
+            >
+              Username
+            </label>
             <input
               id="username"
               name="username"
@@ -74,19 +74,17 @@ const Signup = () => {
               required
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              className="block w-full p-3 mt-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-600"
             />
           </div>
-        </div>
 
-        <div className="mb-4">
-          <label
-            htmlFor="email"
-            className="block text-sm font-medium leading-6 text-gray-900"
-          >
-            Email
-          </label>
-          <div className="mt-2">
+          <div className="mb-4">
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-gray-900"
+            >
+              Email
+            </label>
             <input
               id="email"
               name="email"
@@ -95,19 +93,17 @@ const Signup = () => {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              className="block w-full p-3 mt-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-600"
             />
           </div>
-        </div>
 
-        <div className="mb-4">
-          <label
-            htmlFor="contact"
-            className="block text-sm font-medium leading-6 text-gray-900"
-          >
-            Contact
-          </label>
-          <div className="mt-2">
+          <div className="mb-4">
+            <label
+              htmlFor="contact"
+              className="block text-sm font-medium text-gray-900"
+            >
+              Contact
+            </label>
             <input
               id="contact"
               name="contact"
@@ -116,21 +112,17 @@ const Signup = () => {
               required
               value={contact}
               onChange={(e) => setContact(e.target.value)}
-              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              className="block w-full p-3 mt-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-600"
             />
           </div>
-        </div>
 
-        <div className="mb-6">
-          <div className="flex items-center justify-between">
+          <div className="mb-6">
             <label
               htmlFor="password"
-              className="block text-sm font-medium leading-6 text-gray-900"
+              className="block text-sm font-medium text-gray-900"
             >
               Password
             </label>
-          </div>
-          <div className="mt-2">
             <input
               id="password"
               name="password"
@@ -139,20 +131,20 @@ const Signup = () => {
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              className="block w-full p-3 mt-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-600"
             />
           </div>
-        </div>
 
-        {error && <div className="text-red-600 text-sm">{error}</div>}
+          {error && <div className="text-red-600 text-sm mb-4">{error}</div>}
 
-        <div>
-          <button
-            type="submit"
-            className="w-full bg-indigo-600 text-white rounded-md py-2 font-semibold text-sm shadow-sm hover:bg-indigo-500 focus:ring-2 focus:ring-indigo-600 focus:ring-inset"
-          >
-            Sign Up
-          </button>
+          <div>
+            <button
+              type="submit"
+              className="w-full bg-indigo-600 text-white rounded-md py-3 font-semibold text-sm shadow-md hover:bg-indigo-500 focus:ring-2 focus:ring-indigo-600 focus:ring-inset"
+            >
+              Sign Up
+            </button>
+          </div>
         </div>
       </form>
 

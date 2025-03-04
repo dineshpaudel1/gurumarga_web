@@ -10,7 +10,6 @@ const AddCourse = ({ isOpen, onClose, refreshCourses }) => {
   const [thumbnail, setThumbnail] = useState(null);
   const [instructor, setInstructor] = useState("");
   const [language, setLanguage] = useState("");
-  const [videoLink, setvideoLink] = useState("");
   const [categories, setCategories] = useState([]); // State to hold categories
   const [loading, setLoading] = useState(true); // State for loading status
   const [error, setError] = useState(null); // State for error handling
@@ -39,6 +38,8 @@ const AddCourse = ({ isOpen, onClose, refreshCourses }) => {
     fetchCategories();
   }, []);
 
+  const instructorId = localStorage.getItem("id"); //getting id from localstorage
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -52,8 +53,8 @@ const AddCourse = ({ isOpen, onClose, refreshCourses }) => {
       courseDescription,
       category,
       price,
+      instructorId,
       language,
-      videoLink,
     };
 
     try {
@@ -149,19 +150,6 @@ const AddCourse = ({ isOpen, onClose, refreshCourses }) => {
 
           <div>
             <label className="block text-sm font-medium text-gray-700">
-              Instructor
-            </label>
-            <input
-              type="text"
-              value={instructor}
-              onChange={(e) => setInstructor(e.target.value)}
-              required
-              className="w-full mt-1 p-2 border rounded"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700">
               Language
             </label>
             <input
@@ -172,19 +160,6 @@ const AddCourse = ({ isOpen, onClose, refreshCourses }) => {
               className="w-full mt-1 p-2 border rounded"
             />
           </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Video Link
-            </label>
-            <input
-              type="text"
-              value={videoLink}
-              onChange={(e) => setvideoLink(e.target.value)}
-              required
-              className="w-full mt-1 p-2 border rounded"
-            />
-          </div>
-
           <div>
             <label className="block text-sm font-medium text-gray-700">
               Thumbnail

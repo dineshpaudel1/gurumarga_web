@@ -1,24 +1,17 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faUser,
-  faCaretDown,
-  faShoppingCart,
-  faBell,
-} from "@fortawesome/free-solid-svg-icons";
+import { faUser,} from "@fortawesome/free-solid-svg-icons";
 import logo from "../../assets/logo.png";
 import UserContext from "../../context/UserInfoProvider";
-import { fetchCategoryById } from "../../Apis/CategoryApi";
+import { FaSearch } from 'react-icons/fa';
 
 const Header = () => {
   const [username, setUsername] = useState(null);
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [categoryDropdownOpen, setCategoryDropdownOpen] = useState(false);
-  const [cartCount, setCartCount] = useState(0);
   const navigate = useNavigate();
-
   const [userInfo, fetchUserInfo, role] = useContext(UserContext);
+
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -27,37 +20,7 @@ const Header = () => {
     const storedUsername = localStorage.getItem("username");
     if (storedUsername) setUsername(storedUsername);
 
-    const storedCart = localStorage.getItem("cart");
-    if (storedCart) {
-      const cartItems = JSON.parse(storedCart);
-      const totalItems = cartItems.reduce(
-        (sum, item) => sum + (item.quantity || 1),
-        0
-      );
-      setCartCount(totalItems);
-    }
   }, []);
-
-  const updateCartCount = () => {
-    const storedCart = localStorage.getItem("cart");
-    if (storedCart) {
-      const cartItems = JSON.parse(storedCart);
-      const totalItems = cartItems.reduce(
-        (sum, item) => sum + (item.quantity || 1),
-        0
-      );
-      setCartCount(totalItems);
-    }
-    window.location.reload();
-  };
-
-  const handleCategoryClick = (categoryId) => {
-    fetchCategoryById(categoryId)
-      .then((category) => {
-        navigate(`/categories/${categoryId}`, { state: { category } });
-      })
-      .catch((error) => console.error(error));
-  };
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -67,151 +30,65 @@ const Header = () => {
     navigate("/");
   };
 
-  const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
-  const closeDropdown = () => setDropdownOpen(false);
-  const toggleCategoryDropdown = () =>
-    setCategoryDropdownOpen(!categoryDropdownOpen);
-  const closeCategoryDropdown = () => setCategoryDropdownOpen(false);
-
   return (
-    <header className="bg-white shadow-sm py-4 fixed top-0 left-0 right-0 z-50">
-      <div className="container mx-auto flex items-center justify-between px-4">
-        <div className="flex items-center space-x-4">
-          <nav className="hidden md:flex space-x-4">
-            <div className="flex items-center space-x-6">
-              <Link to="/" className="flex items-center">
-                <img src={logo} alt="Logo" className="h-[60px]" />
-              </Link>
+    <header className="bg-white shadow-md py-3 fixed top-0 left-0 right-0 z-50">
+      <div className="container mx-auto flex items-center justify-between px-6">
+        {/* Logo */}
+        <Link to="/" className="flex items-center gap-1">
+          <img src={logo} alt="Logo" className="h-12" />
+          <span className="text-xl font-bold text-[#3B3F58] tracking-tight">Guru</span>
+          <span className="text-xl font-bold bg-gradient-to-r from-blue-500 to-indigo-600 text-transparent bg-clip-text">Marga</span>
+        </Link>
 
-              <div className="relative">
-                <button
-                  onClick={toggleCategoryDropdown}
-                  className="text-[#1a237e] hover:text-gray-800 flex items-center focus:outline-none"
-                >
-                  Category
-                  <FontAwesomeIcon icon={faCaretDown} className="ml-2" />
-                </button>
-                {categoryDropdownOpen && (
-                  <div className="absolute left-0 mt-2 w-48 bg-white border rounded-lg shadow-lg z-50">
-                    {categoryInfo.map((category) => (
-                      <button
-                        key={category.id}
-                        onClick={() => handleCategoryClick(category.id)}
-                        className="block px-4 py-2 text-gray-800 hover:bg-gray-100 w-full text-left"
-                      >
-                        {category.categoryName}
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </div>
-          </nav>
-        </div>
 
-        <div className="flex items-center space-x-4">
-          <input
-            type="text"
-            placeholder="Search"
-            className="border rounded-md py-2 px-4 text-gray-600 focus:outline-none focus:ring focus:ring-indigo-300"
-          />
+        {/* Search Bar */}
+        <div className="hidden md:flex w-1/2 relative">
+  <input
+    type="text"
+    name="q"
+    placeholder="Search for courses..."
+    className="w-full h-11 pl-4 pr-12 bg-gray-50 border border-gray-200 rounded-full text-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all duration-200"
+  />
+  {/* Search Icon on the right */}
+  <FaSearch
+    className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500"
+    size={15} // Adjust the size if needed
+  />
+</div>
 
-          <FontAwesomeIcon
-            icon={faBell}
-            className="text-xl text-gray-600 cursor-pointer hover:text-indigo-500"
-          />
 
-          <Link to="/cart" className="relative">
-            <FontAwesomeIcon
-              icon={faShoppingCart}
-              className="ml-2 text-xl cursor-pointer"
-            />
-            <span className="absolute top-[-10px] right-[-10px] bg-red-500 text-white text-xs rounded-full px-1 py-0.3">
-              {cartCount}
-            </span>
-          </Link>
-
-          {(role === "ROLE_USER" || !role) && (
-            <Link to="/becometeacher" className="ml-4 text-[#1a237e]">
-              Become Teacher
-            </Link>
-          )}
+        {/* Icons & User Dropdown */}
+        <div className="flex items-center space-x-6">
 
           {username ? (
             <div className="relative">
               <button
-                onClick={toggleDropdown}
-                className="text-gray-600 hover:text-gray-800 flex items-center text-lg py-2 focus:outline-none"
-              >
-                <FontAwesomeIcon icon={faUser} className="mr-2" />
-                <FontAwesomeIcon icon={faCaretDown} className="ml-2" />
-              </button>
+  onClick={() => setDropdownOpen(!dropdownOpen)}
+  className="text-gray-600 flex items-center"
+>
+  <div className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-200">
+    <FontAwesomeIcon icon={faUser} className="text-gray-600" />
+  </div>
+</button>
+
               {dropdownOpen && (
-                <div
-                  className="absolute right-0 mt-2 w-48 bg-white border rounded-lg shadow-lg z-50"
-                  onMouseLeave={closeDropdown}
-                >
-                  {role === "ROLE_ADMIN" && (
-                    <Link
-                      to="/admin"
-                      className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
-                      onClick={closeDropdown}
-                    >
-                      Admin Panel
-                    </Link>
-                  )}
-                  {role === "ROLE_USER" && (
-                    <>
-                      <Link
-                        to="/profile"
-                        className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
-                        onClick={closeDropdown}
-                      >
-                        Profile
-                      </Link>
-                      <Link
-                        to="mycourse"
-                        className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
-                        onClick={closeDropdown}
-                      >
-                        My Courses
-                      </Link>
-                    </>
-                  )}
-                  {role === "ROLE_TEACHER" && (
-                    <Link
-                      to="teacher"
-                      className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
-                      onClick={closeDropdown}
-                    >
-                      Teacher Panel
-                    </Link>
-                  )}
-                  <button
-                    onClick={() => {
-                      handleLogout();
-                      closeDropdown();
-                    }}
-                    className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-200"
-                  >
-                    Logout
-                  </button>
+                <div className="absolute right-0 mt-2 w-48 bg-white border rounded-lg shadow-lg z-50">
+                  {role === "ROLE_ADMIN" && <Link to="/admin" className="block px-4 py-2 hover:bg-gray-100">Admin Panel</Link>}
+                  {role === "ROLE_USER" && <Link to="/profile" className="block px-4 py-2 hover:bg-gray-100">Profile</Link>}
+                  {role === "ROLE_TEACHER" && <Link to="/teacher" className="block px-4 py-2 hover:bg-gray-100">Teacher Panel</Link>}
+                  <button onClick={handleLogout} className="block w-full text-left px-4 py-2 hover:bg-gray-100">Logout</button>
                 </div>
               )}
             </div>
           ) : (
-            <>
-              <Link to="/login">
-                <button className="px-4 py-2 text-indigo-600 border border-indigo-600 rounded-md hover:bg-indigo-100">
-                  Login
-                </button>
+            <div className="flex space-x-3">
+              <Link to="/login" className="px-5 py-2.5 text-sm font-medium text-blue-600 bg-gradient-to-r from-blue-200 to-indigo-100 rounded-full hover:from-blue-100 hover:to-indigo-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200">
+                Login
               </Link>
-              <Link to="/signup">
-                <button className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700">
-                  Sign Up
-                </button>
+              <Link to="/signup" className="px-5 py-2.5 text-sm font-medium text-white bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full hover:from-blue-600 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200">
+                Sign Up
               </Link>
-            </>
+            </div>
           )}
         </div>
       </div>

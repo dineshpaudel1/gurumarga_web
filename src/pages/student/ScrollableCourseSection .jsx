@@ -37,9 +37,9 @@ const ScrollableCourseSection = ({ title, courses }) => {
   };
 
   return (
-    <section className="py-16 bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-3xl font-bold text-[#1a237e] mb-12">{title}</h2>
+    <section className="py-5 bg-gray-50">
+      <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
+        <h2 className="text-2xl font-bold text-[#1a237e] mb-8">{title}</h2>
         <div className="relative">
           <div
             ref={scrollContainerRef}

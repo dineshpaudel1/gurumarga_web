@@ -40,13 +40,16 @@ export const addCourse = async (courseData, thumbnail, accessToken) => {
   formData.append("file", thumbnail);
 
   try {
-    const response = await fetch("http://localhost:8080/api/admin/add", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-      body: formData,
-    });
+    const response = await fetch(
+      "http://localhost:8080/api/teacher/addCourse",
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+        body: formData,
+      }
+    );
 
     if (!response.ok) {
       const errorMessage = await response.text();

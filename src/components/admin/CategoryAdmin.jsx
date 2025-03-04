@@ -108,7 +108,7 @@ const CategoryAdmin = () => {
                 <td className="px-6 py-4 text-center">
                   <img
                     src={`http://localhost:8080/${category.categoryPhoto}`}
-                    alt={category.categoryName}
+                    alt=""
                     className="w-20 h-20 object-cover mx-auto"
                   />
                 </td>

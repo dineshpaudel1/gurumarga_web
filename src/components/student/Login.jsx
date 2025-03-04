@@ -39,85 +39,88 @@ const Login = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-[150px] mb-6 p-6 bg-white rounded-lg shadow-md">
-      <h2 className="text-2xl font-bold mb-6 text-center">
-        Log In to GuruMarga
-      </h2>
-      <form onSubmit={handleLogin}>
-        <div className="mb-4">
-          <label
-            htmlFor="username"
-            className="block text-sm font-medium leading-6 text-gray-900"
-          >
-            Username
-          </label>
-          <div className="mt-2">
+    <div className="flex items-center justify-center min-h-screen bg-[#F9FAFB]">
+      <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-lg">
+        <h2 className="text-3xl font-bold text-center text-[#3B3F58] mb-6">
+          Login
+        </h2>
+
+        {/* Display Error Messages */}
+        {error && (
+          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+            {error}
+          </div>
+        )}
+
+        <form onSubmit={handleLogin}>
+          {/* Username Field */}
+          <div className="mb-4">
+            <label
+              htmlFor="username"
+              className="block text-gray-700 font-medium mb-2"
+            >
+              Username
+            </label>
             <input
-              id="username"
-              name="username"
               type="text"
-              autoComplete="username"
+              name="username"
+              id="username"
+              placeholder="Enter your username"
               required
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              className="w-full p-3 border border-gray-300 rounded-md bg-[#F0F2F5] focus:outline-none focus:ring-2 focus:ring-[#3B3F58] transition duration-200"
             />
           </div>
-        </div>
 
-        <div className="mb-6">
-          <div className="flex items-center justify-between">
+          {/* Password Field */}
+          <div className="mb-6">
             <label
               htmlFor="password"
-              className="block text-sm font-medium leading-6 text-gray-900"
+              className="block text-gray-700 font-medium mb-2"
             >
               Password
             </label>
-            <div className="text-sm">
-              <a
-                href="#"
-                className="font-semibold text-indigo-600 hover:text-indigo-500"
-              >
-                Forgot password?
-              </a>
-            </div>
-          </div>
-          <div className="mt-2">
             <input
-              id="password"
-              name="password"
               type="password"
-              autoComplete="current-password"
+              name="password"
+              id="password"
+              placeholder="Enter your password"
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              className="w-full p-3 border border-gray-300 rounded-md bg-[#F0F2F5] focus:outline-none focus:ring-2 focus:ring-[#3B3F58] transition duration-200"
             />
           </div>
-        </div>
 
-        {error && <div className="text-red-600 text-sm">{error}</div>}
-
-        <div>
           <button
             type="submit"
-            className="w-full bg-indigo-600 text-white rounded-md py-2 font-semibold text-sm shadow-sm hover:bg-indigo-500 focus:ring-2 focus:ring-indigo-600 focus:ring-inset"
+            className="w-full py-3 rounded-md bg-[#3B82F6] hover:bg-[#2563EB] text-white font-semibold transition duration-300 shadow-md"
           >
-            Sign In
+            Login
           </button>
-        </div>
-      </form>
 
-      <p className="mt-4 text-center text-sm text-gray-600">
-        Don't have an account?{" "}
-        <a
-          href="#"
-          className="text-blue-600 hover:underline"
-          onClick={handleSignupRedirect}
-        >
-          Sign up
-        </a>
-      </p>
+          <p className="text-center mt-4 text-gray-600">
+            <a
+              href="#"
+              className="text-[#3B3F58] hover:text-gray-500 transition duration-200"
+            >
+              Forgot Password?
+            </a>
+          </p>
+        </form>
+
+        <p className="text-center mt-4 text-gray-600">
+          Don't have an account?{" "}
+          <a
+            href="#"
+            className="text-[#3B82F6] hover:text-[#2563EB] transition duration-200 font-semibold"
+            onClick={handleSignupRedirect}
+          >
+            Register
+          </a>
+        </p>
+      </div>
     </div>
   );
 };

@@ -3,35 +3,33 @@ import studentImage from "../../assets/student.png"; // Replace with the correct
 
 const HeroSection = () => {
   return (
-    <section className="relative overflow-hidden py-8 lg:py-12">
-      {" "}
-      {/* Adjusted padding */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-          {/* Left Column */}
-          <div className="space-y-6 z-10">
-            <div className="space-y-2">
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold">
+    <section className="relative overflow-hidden pt-2 lg:pt-8 pb-[-40px] lg:pb-0">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
+        <div className="grid grid-cols-12 gap-6 items-center">
+          {/* Left Column (Spans 8 out of 12 frames) */}
+          <div className="col-span-12 lg:col-span-8 space-y-4 z-10">
+            <div className="space-y-1">
+              <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold">
                 <span className="text-[#1a237e]">
                   Unlock your Learning potential with{" "}
                 </span>{" "}
                 <span className="text-[#5e17eb]">GuruMarga</span>
               </h1>
-              <p className="text-lg md:text-xl text-[#1a237e]/80">
+              <p className="text-base md:text-lg text-[#1a237e]/80">
                 Anywhere, anytime. Start learning today!
               </p>
             </div>
 
-            <div className="relative max-w-xl">
+            <div className="relative max-w-lg">
               <input
                 type="text"
                 placeholder="What you want to learn?"
-                className="w-full py-3 pl-4 pr-12 text-base md:text-lg rounded-lg border-gray-600 bg-gray-200 placeholder:text-[#9FA6B2]" // Updated border color
+                className="w-full py-2 pl-3 pr-10 text-sm md:text-base rounded-lg border-gray-600 bg-gray-200 placeholder:text-[#9FA6B2]"
               />
 
-              <div className="absolute right-4 top-1/2 -translate-y-1/2">
+              <div className="absolute right-3 top-1/2 -translate-y-1/2">
                 <svg
-                  className="w-5 h-5 text-gray-400"
+                  className="w-4 h-4 text-gray-400"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -46,24 +44,20 @@ const HeroSection = () => {
               </div>
             </div>
 
-            <button className="bg-[#5e17eb] hover:bg-[#5e17eb]/90 text-white px-6 py-3 text-base md:text-lg rounded-lg">
+            <button className="px-5 py-2.5 text-sm font-medium text-white bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full hover:from-blue-600 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200">
               Get Started
             </button>
           </div>
 
-          {/* Right Column */}
-          <div className="relative h-[350px] lg:h-[500px]">
-            {" "}
-            {/* Increased height for mobile and large screens */}
+          {/* Right Column (Spans 4 out of 12 frames) */}
+          <div className="col-span-12 lg:col-span-4 relative h-[150px] lg:h-[450px]">
             <div className="absolute inset-0 flex items-center justify-center">
-              <div className="relative w-96 h-96 lg:w-[500px] lg:h-[500px]">
-                {" "}
-                {/* Increased width and height */}
-                <div className="absolute inset-0 bg-[#E1BEE7] rounded-full transform -rotate-6"></div>
+              <div className="relative w-72 h-72 lg:w-96 lg:h-96">
+                <div className="rounded-full transform -rotate-6"></div>
                 <img
                   src={studentImage}
                   alt="Student"
-                  className="relative z-10 object-cover rounded-full w-full h-full"
+                  className="relative z-10 object-cover rounded-full w-[500px] h-[350px]"
                 />
               </div>
             </div>
