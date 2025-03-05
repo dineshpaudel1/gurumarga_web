@@ -5,12 +5,13 @@ import {
   FaTachometerAlt,
   FaBook,
   FaUserGraduate,
+  FaPlus,
 } from "react-icons/fa";
 import notification from "../../assets/notifi.webp";
 import logo from "../../assets/logo.png";
 import { fetchUserInfo } from "../../Apis/UserApi";
 
-const MasterTeacher = ({ children }) => {
+const MasterTeacher = () => {
   const [userInfo, setUserInfo] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -31,7 +32,6 @@ const MasterTeacher = ({ children }) => {
         const data = await fetchUserInfo(token);
         setUserInfo(data);
       } catch (error) {
-        console.error("Fetch Error:", error);
         setError(error.message);
       } finally {
         setLoading(false);
@@ -43,7 +43,6 @@ const MasterTeacher = ({ children }) => {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-    localStorage.removeItem("username");
     navigate("/");
   };
 
@@ -52,42 +51,45 @@ const MasterTeacher = ({ children }) => {
   };
 
   if (loading) return <div className="text-center">Loading...</div>;
-  if (error)
-    return <div className="text-center text-red-600">Error: {error}</div>;
+  if (error) return <div className="text-center text-red-600">Error: {error}</div>;
 
   return (
-    <div className="flex h-screen bg-[#F3E5F5]">
+    <div className="flex h-screen bg-[#f8f9fa]">
       {/* Sidebar */}
       <aside
         className={`${
           isSidebarOpen ? "w-64" : "w-16"
-        } bg-[#1a237e] text-white flex flex-col shadow-lg transition-all duration-500 ease-in-out h-full`}
-        onMouseEnter={() => setIsSidebarOpen(true)}
-        onMouseLeave={() => setIsSidebarOpen(false)}
+        } bg-[#2c3e50] text-white flex flex-col transition-all duration-500 h-full`}
       >
-        <div className="p-4 flex items-center justify-between border-b border-blue-500">
+        <div className="p-4 flex items-center justify-between border-b border-gray-600">
           <button onClick={toggleSidebar} className="text-white">
             <FaBars size={20} />
           </button>
         </div>
         <nav className="flex-1 mt-6">
           <ul>
-            <li className="p-4 hover:bg-[#5e17eb] flex items-center">
+            <li className="p-4 hover:bg-[#34495e] flex items-center">
               <Link to="dashboard" className="flex items-center">
                 <FaTachometerAlt />
-                {isSidebarOpen && <span>Dashboard</span>}
+                {isSidebarOpen && <span className="ml-2">Dashboard</span>}
               </Link>
             </li>
-            <li className="p-4 hover:bg-[#5e17eb] flex items-center">
+            <li className="p-4 hover:bg-[#34495e] flex items-center">
               <Link to="teachercourse" className="flex items-center">
-                <FaBook className="mr-2" />
-                {isSidebarOpen && <span>Courses</span>}
+                <FaBook />
+                {isSidebarOpen && <span className="ml-2">My Courses</span>}
               </Link>
             </li>
-            <li className="p-4 hover:bg-[#5e17eb] flex items-center">
+            <li className="p-4 hover:bg-[#34495e] flex items-center">
+              <Link to="teachercourse" className="flex items-center">
+                <FaPlus />
+                {isSidebarOpen && <span className="ml-2">Add Course</span>}
+              </Link>
+            </li>
+            <li className="p-4 hover:bg-[#34495e] flex items-center">
               <Link to="enrolleduser" className="flex items-center">
-                <FaUserGraduate className="mr-2" />
-                {isSidebarOpen && <span>Enrollment</span>}
+                <FaUserGraduate />
+                {isSidebarOpen && <span className="ml-2">Enrollment</span>}
               </Link>
             </li>
           </ul>
@@ -97,25 +99,12 @@ const MasterTeacher = ({ children }) => {
       {/* Main Content */}
       <div className="flex-1 flex flex-col">
         {/* Navbar */}
-        <header className="bg-white shadow-md p-4 flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-[#1a237e]">
-            Teacher Dashboard
-          </h1>
+        <header className="bg-white shadow p-4 flex justify-between items-center">
+          <h1 className="text-2xl font-bold text-[#333]">Teacher Dashboard</h1>
           <div className="flex items-center space-x-4">
-            {" "}
-            {/* Removed ml-auto */}
-            <input
-              type="text"
-              placeholder="Search..."
-              className="border border-gray-300 px-3 py-2 rounded bg-gray-200"
-            />
-            <img
-              src={notification}
-              alt="Notifications"
-              className="w-8 h-8 cursor-pointer"
-            />
+           
             <Link to="/" className="flex items-center">
-              <h1>Student</h1>
+              <h1>Home</h1>
             </Link>
             <Link to="settingadmin" className="flex items-center">
               <img
@@ -130,7 +119,7 @@ const MasterTeacher = ({ children }) => {
             </Link>
           </div>
         </header>
-        <main className="flex-1 p-6 overflow-y-auto bg-[#EDE7F6]">
+        <main className="flex-1 p-6 overflow-y-auto bg-white">
           <Outlet />
         </main>
       </div>

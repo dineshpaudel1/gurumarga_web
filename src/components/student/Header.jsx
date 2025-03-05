@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser,} from "@fortawesome/free-solid-svg-icons";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
 import logo from "../../assets/logo.png";
 import UserContext from "../../context/UserInfoProvider";
 import { FaSearch } from 'react-icons/fa';
@@ -12,14 +12,12 @@ const Header = () => {
   const navigate = useNavigate();
   const [userInfo, fetchUserInfo, role] = useContext(UserContext);
 
-
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) handleLogout();
 
     const storedUsername = localStorage.getItem("username");
     if (storedUsername) setUsername(storedUsername);
-
   }, []);
 
   const handleLogout = () => {
@@ -40,39 +38,40 @@ const Header = () => {
           <span className="text-xl font-bold bg-gradient-to-r from-blue-500 to-indigo-600 text-transparent bg-clip-text">Marga</span>
         </Link>
 
-
         {/* Search Bar */}
         <div className="hidden md:flex w-1/2 relative">
-  <input
-    type="text"
-    name="q"
-    placeholder="Search for courses..."
-    className="w-full h-11 pl-4 pr-12 bg-gray-50 border border-gray-200 rounded-full text-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all duration-200"
-  />
-  {/* Search Icon on the right */}
-  <FaSearch
-    className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500"
-    size={15} // Adjust the size if needed
-  />
-</div>
-
+          <input
+            type="text"
+            name="q"
+            placeholder="Search for courses..."
+            className="w-full h-11 pl-4 pr-12 bg-gray-50 border border-gray-200 rounded-full text-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all duration-200"
+          />
+          <FaSearch
+            className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500"
+            size={15}
+          />
+        </div>
 
         {/* Icons & User Dropdown */}
         <div className="flex items-center space-x-6">
-
           {username ? (
-            <div className="relative">
-              <button
-  onClick={() => setDropdownOpen(!dropdownOpen)}
-  className="text-gray-600 flex items-center"
->
-  <div className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-200">
-    <FontAwesomeIcon icon={faUser} className="text-gray-600" />
-  </div>
-</button>
+            <div
+              className="relative"
+              onMouseEnter={() => setDropdownOpen(true)}
+              onMouseLeave={() => setDropdownOpen(false)}
+            >
+              <button className="text-gray-600 flex items-center">
+                <div className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-200">
+                  <FontAwesomeIcon icon={faUser} className="text-gray-600" />
+                </div>
+              </button>
 
               {dropdownOpen && (
-                <div className="absolute right-0 mt-2 w-48 bg-white border rounded-lg shadow-lg z-50">
+                <div
+                  className="absolute right-0 w-48 bg-white border rounded-lg shadow-lg z-50"
+                  onMouseEnter={() => setDropdownOpen(true)} // Keeps dropdown open while hovering
+                  onMouseLeave={() => setDropdownOpen(false)} // Closes dropdown when mouse leaves
+                >
                   {role === "ROLE_ADMIN" && <Link to="/admin" className="block px-4 py-2 hover:bg-gray-100">Admin Panel</Link>}
                   {role === "ROLE_USER" && <Link to="/profile" className="block px-4 py-2 hover:bg-gray-100">Profile</Link>}
                   {role === "ROLE_TEACHER" && <Link to="/teacher" className="block px-4 py-2 hover:bg-gray-100">Teacher Panel</Link>}

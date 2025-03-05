@@ -3,82 +3,88 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import CourseCard from "./CourseCard";
 
 const ScrollableCourseSection = ({ title, courses }) => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [maxIndex, setMaxIndex] = useState(0);
   const scrollContainerRef = useRef(null);
+  const [scrollState, setScrollState] = useState({
+    canScrollLeft: false,
+    canScrollRight: false,
+  });
 
-  const scrollAmount = 300; // The scroll amount for each button click
+  const scrollAmount = 300; // Scroll distance per button click
 
   useEffect(() => {
-    const calculateMaxIndex = () => {
-      if (scrollContainerRef.current) {
-        const containerWidth = scrollContainerRef.current.clientWidth;
-        const itemWidth = 300; // Assuming each course card is 300px wide
-        const itemsPerView = Math.floor(containerWidth / itemWidth);
-        setMaxIndex(Math.max(0, courses.length - itemsPerView));
+    const checkScrollPosition = () => {
+      const container = scrollContainerRef.current;
+      if (container) {
+        setScrollState({
+          canScrollLeft: container.scrollLeft > 0,
+          canScrollRight:
+            container.scrollLeft < container.scrollWidth - container.clientWidth,
+        });
       }
     };
 
-    calculateMaxIndex();
-    window.addEventListener("resize", calculateMaxIndex);
-    return () => window.removeEventListener("resize", calculateMaxIndex);
-  }, [courses.length]);
+    checkScrollPosition();
+    window.addEventListener("resize", checkScrollPosition);
+    return () => window.removeEventListener("resize", checkScrollPosition);
+  }, [courses]);
 
-  const handlePrev = () => {
+  const handleScroll = (direction) => {
     const container = scrollContainerRef.current;
-    container.scrollLeft -= scrollAmount;
-    setCurrentIndex((prev) => Math.max(prev - 1, 0));
-  };
-
-  const handleNext = () => {
-    const container = scrollContainerRef.current;
-    container.scrollLeft += scrollAmount;
-    setCurrentIndex((prev) => Math.min(prev + 1, maxIndex));
+    if (container) {
+      container.scrollBy({ left: direction * scrollAmount, behavior: "smooth" });
+      setTimeout(() => checkScrollPosition(), 300); // Delay checking scroll position for smooth scrolling
+    }
   };
 
   return (
     <section className="py-5 bg-gray-50">
       <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
         <h2 className="text-2xl font-bold text-[#1a237e] mb-8">{title}</h2>
-        <div className="relative">
-          <div
-            ref={scrollContainerRef}
-            className="flex overflow-x-hidden scroll-smooth" // Removed overflow-x-auto and added overflow-x-hidden
-          >
-            {courses.map((course) => (
-              <div key={course.id} className="flex-none w-[300px] pr-6">
-                <CourseCard course={course} />
-              </div>
-            ))}
+
+        {courses.length === 0 ? (
+          <div className="animate-pulse">
+          <div className="h-36 bg-gray-300 rounded-t-lg"></div>
+          <div className="p-3">
+            <div className="h-6 bg-gray-300 rounded w-3/4 mb-2"></div>
+            <div className="h-4 bg-gray-300 rounded w-full mb-2"></div>
+            <div className="h-4 bg-gray-300 rounded w-1/2 mb-4"></div>
+            <div className="h-5 bg-gray-300 rounded w-1/4 mb-4"></div>
+            <div className="h-10 bg-gray-300 rounded w-full"></div>
           </div>
-          {currentIndex > 0 && (
-            <button
-              onClick={handlePrev}
-              className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-md"
-            >
-              <ChevronLeft className="w-6 h-6 text-[#5e17eb]" />
-            </button>
-          )}
-          {currentIndex < maxIndex && (
-            <button
-              onClick={handleNext}
-              className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-md"
-            >
-              <ChevronRight className="w-6 h-6 text-[#5e17eb]" />
-            </button>
-          )}
         </div>
-        <div className="flex justify-center mt-4">
-          {Array.from({ length: maxIndex + 1 }).map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentIndex(index)}
-              className={`w-3 h-3 rounded-full mx-1 ${
-                index === currentIndex ? "bg-[#5e17eb]" : "bg-gray-300"
-              }`}
-            />
-          ))}
-        </div>
+        ) : (
+          <div className="relative">
+            {/* Course Scroll Container */}
+            <div
+              ref={scrollContainerRef}
+              className="flex overflow-x-hidden scroll-smooth"
+            >
+              {courses.map((course) => (
+                <div key={course.id} className="flex-none w-[300px] pr-6">
+                  <CourseCard course={course} />
+                </div>
+              ))}
+            </div>
+
+            {/* Scroll Buttons */}
+            {scrollState.canScrollLeft && (
+              <button
+                onClick={() => handleScroll(-1)}
+                className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-md"
+              >
+                <ChevronLeft className="w-6 h-6 text-[#5e17eb]" />
+              </button>
+            )}
+            {scrollState.canScrollRight && (
+              <button
+                onClick={() => handleScroll(1)}
+                className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-md"
+              >
+                <ChevronRight className="w-6 h-6 text-[#5e17eb]" />
+              </button>
+            )}
+          </div>
+        )}
       </div>
     </section>
   );

@@ -60,9 +60,6 @@ const MasterAdmin = () => {
     fetchRequests();
   }, [token]);
 
-  const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen);
-  };
 
   if (loading) return <div className="text-center">Loading...</div>;
   if (error)
@@ -73,30 +70,29 @@ const MasterAdmin = () => {
       <aside
         className={`${
           isSidebarOpen ? "w-64" : "w-16"
-        } bg-[#1a237e] text-white flex flex-col shadow-lg transition-all duration-500 ease-in-out h-full`}
-        onMouseEnter={() => setIsSidebarOpen(true)}
-        onMouseLeave={() => setIsSidebarOpen(false)}
+        } bg-[#2c3e50] text-white flex flex-col shadow-lg transition-all duration-500 ease-in-out h-full`}
+        
       >
         <div className="p-4 flex items-center justify-between border-b border-blue-500">
-          <button onClick={toggleSidebar} className="text-white">
+          <button className="text-white">
             <FaBars size={20} />
           </button>
         </div>
         <nav className="flex-1 mt-6">
           <ul>
-            <li className="p-4 hover:bg-[#5e17eb] flex items-center">
+            <li className="p-4 hover:bg-[#918e98] flex items-center">
               <Link to="dashboard" className="flex items-center">
                 <FaTachometerAlt />
                 {isSidebarOpen && <span>Dashboard</span>}
               </Link>
             </li>
-            <li className="p-4 hover:bg-[#5e17eb] flex items-center">
+            <li className="p-4 hover:bg-[#918e98] flex items-center">
               <Link to="categoryadmin" className="flex items-center">
                 <FaBook className="mr-2" />
                 {isSidebarOpen && <span>Categories</span>}
               </Link>
             </li>
-            <li className="p-4 hover:bg-[#5e17eb] flex items-center">
+            <li className="p-4 hover:bg-[#918e98] flex items-center">
               <Link to="useradmin" className="flex items-center">
                 <FaUserGraduate className="mr-2" />
                 {isSidebarOpen && <span>Total Users</span>}
@@ -110,11 +106,7 @@ const MasterAdmin = () => {
         <header className="bg-white shadow-md p-4 flex justify-between items-center">
           <h1 className="text-2xl font-bold text-[#1a237e]">Admin Dashboard</h1>
           <div className="flex items-center space-x-4">
-            <input
-              type="text"
-              placeholder="Search..."
-              className="border border-gray-300 px-3 py-2 rounded bg-gray-200"
-            />
+            
             <Link to="adminnotification" className="relative">
               <FontAwesomeIcon
                 icon={faBell}

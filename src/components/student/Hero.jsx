@@ -3,33 +3,33 @@ import studentImage from "../../assets/student.png"; // Replace with the correct
 
 const HeroSection = () => {
   return (
-    <section className="relative overflow-hidden pt-2 lg:pt-8 pb-[-40px] lg:pb-0">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
-        <div className="grid grid-cols-12 gap-6 items-center">
-          {/* Left Column (Spans 8 out of 12 frames) */}
-          <div className="col-span-12 lg:col-span-8 space-y-4 z-10">
-            <div className="space-y-1">
-              <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold">
-                <span className="text-[#1a237e]">
-                  Unlock your Learning potential with{" "}
-                </span>{" "}
-                <span className="text-[#5e17eb]">GuruMarga</span>
-              </h1>
-              <p className="text-base md:text-lg text-[#1a237e]/80">
-                Anywhere, anytime. Start learning today!
-              </p>
-            </div>
+    <section className="relative overflow-hidden bg-white py-16 lg:py-24">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+          {/* Left Column */}
+          <div className="space-y-6 text-center lg:text-left">
+            {/* Heading */}
+            <h1 className="text-4xl lg:text-5xl font-bold text-gray-900">
+              <span className="block">Unlock Your</span>
+              <span className="block text-blue-600">Learning Potential</span>
+              <span className="block">with GuruMarga</span>
+            </h1>
 
-            <div className="relative max-w-lg">
+            {/* Subheading */}
+            <p className="text-lg text-gray-600">
+              Anywhere, anytime. Start learning today!
+            </p>
+
+            {/* Search Bar */}
+            <div className="relative max-w-md mx-auto lg:mx-0">
               <input
                 type="text"
-                placeholder="What you want to learn?"
-                className="w-full py-2 pl-3 pr-10 text-sm md:text-base rounded-lg border-gray-600 bg-gray-200 placeholder:text-[#9FA6B2]"
+                placeholder="What do you want to learn?"
+                className="w-full py-3 pl-4 pr-12 text-base rounded-lg bg-gray-100 border border-gray-200 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900"
               />
-
-              <div className="absolute right-3 top-1/2 -translate-y-1/2">
+              <div className="absolute right-4 top-1/2 -translate-y-1/2">
                 <svg
-                  className="w-4 h-4 text-gray-400"
+                  className="w-5 h-5 text-gray-500"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -44,22 +44,22 @@ const HeroSection = () => {
               </div>
             </div>
 
-            <button className="px-5 py-2.5 text-sm font-medium text-white bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full hover:from-blue-600 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200">
+            {/* Get Started Button */}
+            <button className="px-8 py-3 text-lg font-semibold text-white bg-blue-600 rounded-full hover:bg-blue-700 transition-all duration-300 shadow-md hover:shadow-lg">
               Get Started
             </button>
           </div>
 
-          {/* Right Column (Spans 4 out of 12 frames) */}
-          <div className="col-span-12 lg:col-span-4 relative h-[150px] lg:h-[450px]">
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="relative w-72 h-72 lg:w-96 lg:h-96">
-                <div className="rounded-full transform -rotate-6"></div>
-                <img
-                  src={studentImage}
-                  alt="Student"
-                  className="relative z-10 object-cover rounded-full w-[500px] h-[350px]"
-                />
-              </div>
+          {/* Right Column */}
+          <div className="relative flex justify-center lg:justify-end">
+            <div className="relative w-72 h-72 lg:w-96 lg:h-96">
+              {/* Image Container */}
+              <div className="absolute inset-0 bg-gray-100 rounded-full transform -rotate-6"></div>
+              <img
+                src={studentImage}
+                alt="Student"
+                className="relative z-10 w-full h-full object-cover rounded-full border-4 border-gray-200 shadow-lg"
+              />
             </div>
           </div>
         </div>
