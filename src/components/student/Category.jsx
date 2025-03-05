@@ -43,7 +43,7 @@ const Categories = () => {
                     className="flex flex-col items-center group bg-white p-8 rounded-xl shadow-lg transition-all duration-300 hover:shadow-2xl hover:scale-105 border border-gray-100 hover:border-[#5e17eb]"
                   >
                     {/* Icon Container */}
-                    <div className="w-20 h-20 rounded-full bg-gradient-to-r from-[#5e17eb] to-[#1a237e] flex items-center justify-center mb-6 transform group-hover:rotate-12 transition-transform duration-300">
+                    <div className="w-20 h-20 rounded-full bg-gradient-to-r from-blue-500 to-indigo-600 flex items-center justify-center mb-6 transform group-hover:rotate-12 transition-transform duration-300">
                       <img
                         src={lokPhoto}
                         alt={category.categoryName}

@@ -87,19 +87,19 @@ const MasterAdmin = () => {
           <ul>
             <li className="p-4 hover:bg-[#34495e] flex items-center">
               <Link to="dashboard" className="flex items-center">
-                <FaTachometerAlt className="w-6 h-6" />
+                <FaTachometerAlt className="w-5 h-5" />
                 {isSidebarOpen && <span className="ml-3">Dashboard</span>}
               </Link>
             </li>
             <li className="p-4 hover:bg-[#34495e] flex items-center">
               <Link to="categoryadmin" className="flex items-center">
-                <FaBook className="w-6 h-6" />
+                <FaBook className="w-5 h-5" />
                 {isSidebarOpen && <span className="ml-3">Categories</span>}
               </Link>
             </li>
             <li className="p-4 hover:bg-[#34495e] flex items-center">
               <Link to="useradmin" className="flex items-center">
-                <FaUserGraduate className="w-6 h-6" />
+                <FaUserGraduate className="w-5 h-5" />
                 {isSidebarOpen && <span className="ml-3">Total Users</span>}
               </Link>
             </li>

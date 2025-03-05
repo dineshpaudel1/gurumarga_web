@@ -45,9 +45,10 @@ const HeroSection = () => {
             </div>
 
             {/* Get Started Button */}
-            <button className="px-8 py-3 text-lg font-semibold text-white bg-blue-600 rounded-full hover:bg-blue-700 transition-all duration-300 shadow-md hover:shadow-lg">
+            <button className="px-8 py-3 text-lg font-semibold text-white bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full hover:bg-blue-700 transition-all duration-300 shadow-md hover:shadow-lg">
               Get Started
             </button>
+            
           </div>
 
           {/* Right Column */}

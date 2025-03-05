@@ -33,9 +33,8 @@ const Header = () => {
       <div className="container mx-auto flex items-center justify-between px-6">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-1">
-          <img src={logo} alt="Logo" className="h-12" />
-          <span className="text-xl font-bold text-[#3B3F58] tracking-tight">Guru</span>
-          <span className="text-xl font-bold bg-gradient-to-r from-blue-500 to-indigo-600 text-transparent bg-clip-text">Marga</span>
+          <img src={logo} alt="Logo" className="h-12 r-10 rounded-full" />
+          <span className="text-xl font-bold text-[#3B3F58] tracking-tight ml-2">Guru<span className="text-xl font-bold bg-gradient-to-r from-blue-500 to-indigo-600 text-transparent bg-clip-text">Marga</span></span>
         </Link>
 
         {/* Search Bar */}
@@ -55,6 +54,9 @@ const Header = () => {
         {/* Icons & User Dropdown */}
         <div className="flex items-center space-x-6">
           <FontAwesomeIcon icon={faBell} className="text-black h-18 w-18" />
+          {role === "ROLE_USER" && <Link to="/admin" className="text-xl font-bold bg-gradient-to-r from-blue-500 to-indigo-600 text-transparent bg-clip-text">BecomeTeacher?</Link>}
+          {role === "ROLE_ADMIN" && <Link to="/admin" className="text-xl font-bold bg-gradient-to-r from-blue-500 to-indigo-600 text-transparent bg-clip-text">Hi! Username</Link>}
+          {role === "ROLE_TEACHER" && <Link to="/admin" className="text-xl font-bold bg-gradient-to-r from-blue-500 to-indigo-600 text-transparent bg-clip-text">Hi! Username</Link>}
           {username ? (
             <div
               className="relative"
@@ -75,7 +77,7 @@ const Header = () => {
                   onMouseLeave={() => setDropdownOpen(false)} // Closes dropdown when mouse leaves
                 >
                   {role === "ROLE_ADMIN" && <Link to="/admin" className="block px-4 py-2 hover:bg-gray-100">Admin Panel</Link>}
-                  {role === "ROLE_USER" && <Link to="/profile" className="block px-4 py-2 hover:bg-gray-100">Profile</Link>}
+                  {role === "ROLE_USER" && <Link to="/profile" className="block px-4 py-2 hover:bg-gray-100">Settings</Link>}
                   {role === "ROLE_TEACHER" && <Link to="/teacher" className="block px-4 py-2 hover:bg-gray-100">Teacher Panel</Link>}
                   <button onClick={handleLogout} className="block w-full text-left px-4 py-2 hover:bg-gray-100">Logout</button>
                 </div>
