@@ -7,6 +7,8 @@ import {
   FaTachometerAlt,
   FaBook,
   FaUserGraduate,
+  FaHome,
+  FaCog,
 } from "react-icons/fa";
 import { fetchUserInfo } from "../../Apis/UserApi";
 import axios from "axios";
@@ -60,6 +62,9 @@ const MasterAdmin = () => {
     fetchRequests();
   }, [token]);
 
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
 
   if (loading) return <div className="text-center">Loading...</div>;
   if (error)
@@ -67,63 +72,69 @@ const MasterAdmin = () => {
 
   return (
     <div className="flex h-screen bg-[#F3E5F5]">
+      {/* Sidebar */}
       <aside
         className={`${
-          isSidebarOpen ? "w-64" : "w-16"
-        } bg-[#2c3e50] text-white flex flex-col shadow-lg transition-all duration-500 ease-in-out h-full`}
-        
+          isSidebarOpen ? "w-64" : "w-20"
+        } bg-[#2c3e50] text-white flex flex-col shadow-lg transition-all duration-300 ease-in-out h-full`}
       >
         <div className="p-4 flex items-center justify-between border-b border-blue-500">
-          <button className="text-white">
+          <button onClick={toggleSidebar} className="text-white">
             <FaBars size={20} />
           </button>
         </div>
         <nav className="flex-1 mt-6">
           <ul>
-            <li className="p-4 hover:bg-[#918e98] flex items-center">
+            <li className="p-4 hover:bg-[#34495e] flex items-center">
               <Link to="dashboard" className="flex items-center">
-                <FaTachometerAlt />
-                {isSidebarOpen && <span>Dashboard</span>}
+                <FaTachometerAlt className="w-6 h-6" />
+                {isSidebarOpen && <span className="ml-3">Dashboard</span>}
               </Link>
             </li>
-            <li className="p-4 hover:bg-[#918e98] flex items-center">
+            <li className="p-4 hover:bg-[#34495e] flex items-center">
               <Link to="categoryadmin" className="flex items-center">
-                <FaBook className="mr-2" />
-                {isSidebarOpen && <span>Categories</span>}
+                <FaBook className="w-6 h-6" />
+                {isSidebarOpen && <span className="ml-3">Categories</span>}
               </Link>
             </li>
-            <li className="p-4 hover:bg-[#918e98] flex items-center">
+            <li className="p-4 hover:bg-[#34495e] flex items-center">
               <Link to="useradmin" className="flex items-center">
-                <FaUserGraduate className="mr-2" />
-                {isSidebarOpen && <span>Total Users</span>}
+                <FaUserGraduate className="w-6 h-6" />
+                {isSidebarOpen && <span className="ml-3">Total Users</span>}
               </Link>
             </li>
           </ul>
         </nav>
+        
       </aside>
 
+      {/* Main Content */}
       <div className="flex-1 flex flex-col">
+        {/* Navbar */}
         <header className="bg-white shadow-md p-4 flex justify-between items-center">
           <h1 className="text-2xl font-bold text-[#1a237e]">Admin Dashboard</h1>
-          <div className="flex items-center space-x-4">
-            
-            <Link to="adminnotification" className="relative">
-              <FontAwesomeIcon
-                icon={faBell}
-                className="text-xl text-gray-600"
-              />
+          <div className="flex items-center space-x-6">
+            <Link
+              to="adminnotification"
+              className="relative flex items-center text-[#1a237e] hover:text-[#2c3e50]"
+            >
+              <FontAwesomeIcon icon={faBell} className="text-xl" />
               {requests.length > 0 && (
-                <span className="absolute top-[-5px] right-[-5px] bg-red-500 text-white px-1 py-0.5 rounded-full text-xs">
+                <span className="absolute top-[-5px] right-[-5px] bg-red-500 text-white px-1.5 py-0.5 rounded-full text-xs">
                   {requests.length}
                 </span>
               )}
             </Link>
-            <Link to="/" className="flex items-center">
-              <h1>Student</h1>
+            <Link to="/" className="flex items-center text-[#1a237e] hover:text-[#2c3e50]">
+              <FaHome size={20} />
+              {isSidebarOpen && <span className="ml-2">Home</span>}
             </Link>
-            <Link to="settingadmin" className="flex items-center">
+            <Link
+              to="settingadmin"
+              className="flex items-center space-x-2"
+            >
               <img
-                className="w-10 h-10 rounded-full"
+                className="w-10 h-10 rounded-full border-2 border-[#2c3e50]"
                 src={
                   userInfo.name
                     ? `http://localhost:8080${userInfo.name}`
@@ -131,10 +142,13 @@ const MasterAdmin = () => {
                 }
                 alt="Profile"
               />
+              {isSidebarOpen && <FaCog size={20} className="text-[#1a237e] hover:text-[#2c3e50]" />}
             </Link>
           </div>
         </header>
-        <main className="flex-1 p-6 overflow-y-auto bg-[#EDE7F6]">
+
+        {/* Main Content Area */}
+        <main className="flex-1 p-6 overflow-y-auto bg-white">
           <Outlet />
         </main>
       </div>

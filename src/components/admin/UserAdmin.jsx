@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { fetchAllUserInfo } from "../../Apis/UserApi"; // Import the fetch function
-import placeholderPhoto from "../../assets/teacher.webp"; // Placeholder image
+import { fetchAllUserInfo } from "../../Apis/UserApi";
+import placeholderPhoto from "../../assets/teacher.webp";
 
 const UserAdmin = () => {
   const [users, setUsers] = useState([]);
-  // Fetch user data on component mount
+
   useEffect(() => {
     const getUsers = async () => {
       try {
@@ -31,47 +31,54 @@ const UserAdmin = () => {
   }, []);
 
   return (
-    <div className="p-10">
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-3xl font-bold">Our Users</h2>
-      </div>
+    <div className="p-8 bg-gray-50 min-h-screen">
+      <div className="max-w-7xl mx-auto">
+        {/* Header */}
+        <div className="flex justify-between items-center mb-8">
+          <h2 className="text-3xl font-bold text-gray-800">Our Users</h2>
+        </div>
 
-      {/* Scrollable table container with fixed dimensions */}
-      <div className=" w-full max-w-[910px] max-h-[430px]">
-        <table className="min-w-full table-auto bg-white shadow-md rounded-lg">
-          <thead>
-            <tr className="bg-gray-200 text-gray-700">
-              <th className="px-4 py-2">Photo</th>
-              <th className="px-4 py-2">Full Name</th>
-              <th className="px-4 py-2">Username</th>
-              <th className="px-4 py-2">Email</th>
-              <th className="px-4 py-2">Contact</th>
-              <th className="px-4 py-2">Roles</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.map((user) => (
-              <tr key={user.id} className="border-t">
-                <td className="px-4 py-2">
-                  <img
-                    src={user.photo}
-                    alt={user.fullName}
-                    className="w-20 h-20 object-cover rounded"
-                  />
-                </td>
-                <td className="px-4 py-2 whitespace-nowrap">{user.fullName}</td>
-                <td className="px-4 py-2 whitespace-nowrap">{user.username}</td>
-                <td className="px-4 py-2 whitespace-nowrap">{user.email}</td>
-                <td className="px-4 py-2 whitespace-nowrap">{user.contact}</td>
-                <td className="px-4 py-2 whitespace-nowrap">
-                  {user.roles.length > 0
-                    ? user.roles.map((role) => role.name).join(", ")
-                    : "No Roles"}
-                </td>
+        {/* Scrollable Table Container */}
+        <div className="bg-white shadow-lg rounded-lg overflow-hidden">
+          <table className="min-w-full">
+            <thead className="bg-gray-100">
+              <tr>
+                <th className="px-6 py-4 text-left text-sm font-medium text-gray-700 uppercase">
+                  Photo
+                </th>
+                <th className="px-6 py-4 text-left text-sm font-medium text-gray-700 uppercase">
+                  Full Name
+                </th>
+                <th className="px-6 py-4 text-left text-sm font-medium text-gray-700 uppercase">
+                  Username
+                </th>
+                <th className="px-6 py-4 text-left text-sm font-medium text-gray-700 uppercase">
+                  Email
+                </th>
+                <th className="px-6 py-4 text-left text-sm font-medium text-gray-700 uppercase">
+                  Contact
+                </th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="divide-y divide-gray-200">
+              {users.map((user) => (
+                <tr key={user.id} className="hover:bg-gray-50 transition-all">
+                  <td className="px-6 py-4">
+                    <img
+                      src={user.photo}
+                      alt={user.fullName}
+                      className="w-16 h-16 object-cover rounded-full"
+                    />
+                  </td>
+                  <td className="px-6 py-4 text-gray-700">{user.fullName}</td>
+                  <td className="px-6 py-4 text-gray-700">{user.username}</td>
+                  <td className="px-6 py-4 text-gray-700">{user.email}</td>
+                  <td className="px-6 py-4 text-gray-700">{user.contact}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

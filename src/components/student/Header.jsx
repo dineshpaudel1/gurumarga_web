@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { faBell, faUser } from "@fortawesome/free-solid-svg-icons";
 import logo from "../../assets/logo.png";
 import UserContext from "../../context/UserInfoProvider";
 import { FaSearch } from 'react-icons/fa';
@@ -54,15 +54,17 @@ const Header = () => {
 
         {/* Icons & User Dropdown */}
         <div className="flex items-center space-x-6">
+          <FontAwesomeIcon icon={faBell} className="text-black h-18 w-18" />
           {username ? (
             <div
               className="relative"
               onMouseEnter={() => setDropdownOpen(true)}
               onMouseLeave={() => setDropdownOpen(false)}
             >
+              
               <button className="text-gray-600 flex items-center">
-                <div className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-200">
-                  <FontAwesomeIcon icon={faUser} className="text-gray-600" />
+                <div className="w-8 h-8 flex items-center justify-center rounded-[20px]  bg-blue-300">
+                  <FontAwesomeIcon icon={faUser} className="text-black" />
                 </div>
               </button>
 

@@ -6,6 +6,8 @@ import {
   FaBook,
   FaUserGraduate,
   FaPlus,
+  FaHome,
+  FaCog,
 } from "react-icons/fa";
 import notification from "../../assets/notifi.webp";
 import logo from "../../assets/logo.png";
@@ -58,42 +60,53 @@ const MasterTeacher = () => {
       {/* Sidebar */}
       <aside
         className={`${
-          isSidebarOpen ? "w-64" : "w-16"
-        } bg-[#2c3e50] text-white flex flex-col transition-all duration-500 h-full`}
+          isSidebarOpen ? "w-64" : "w-20"
+        } bg-[#2c3e50] text-white flex flex-col transition-all duration-300 h-full`}
       >
-        <div className="p-4 flex items-center justify-between border-b border-gray-600">
-          <button onClick={toggleSidebar} className="text-white">
+        <div className="p-4 flex items-center justify-between ">
+          <div>
+            
+          <button
+            onClick={toggleSidebar}
+            className="w-full flex items-center justify-center text-white hover:text-gray-300"
+          >
             <FaBars size={20} />
-          </button>
+            </button>
+            
         </div>
+        </div>
+        <span className="p-4 border-t border-gray-600"></span>
         <nav className="flex-1 mt-6">
           <ul>
+            <Link to="dashboard">
             <li className="p-4 hover:bg-[#34495e] flex items-center">
-              <Link to="dashboard" className="flex items-center">
-                <FaTachometerAlt />
-                {isSidebarOpen && <span className="ml-2">Dashboard</span>}
-              </Link>
+                <FaTachometerAlt className="w-5 h-5" />
+                {isSidebarOpen && <span className="ml-3">Dashboard</span>}
             </li>
+            </Link>
+            <Link to="teachercourse">
             <li className="p-4 hover:bg-[#34495e] flex items-center">
-              <Link to="teachercourse" className="flex items-center">
-                <FaBook />
-                {isSidebarOpen && <span className="ml-2">My Courses</span>}
+              
+                <FaBook className="w-5 h-5" />
+                {isSidebarOpen && <span className="ml-3">My Courses</span>}
+              
+              </li>
               </Link>
-            </li>
             <li className="p-4 hover:bg-[#34495e] flex items-center">
-              <Link to="teachercourse" className="flex items-center">
-                <FaPlus />
-                {isSidebarOpen && <span className="ml-2">Add Course</span>}
+              <Link to="addcourse" className="flex items-center">
+                <FaPlus className="w-5 h-5" />
+                {isSidebarOpen && <span className="ml-3">Add Course</span>}
               </Link>
             </li>
             <li className="p-4 hover:bg-[#34495e] flex items-center">
               <Link to="enrolleduser" className="flex items-center">
-                <FaUserGraduate />
-                {isSidebarOpen && <span className="ml-2">Enrollment</span>}
+                <FaUserGraduate className="w-5 h-5" />
+                {isSidebarOpen && <span className="ml-3">Enrollment</span>}
               </Link>
             </li>
           </ul>
         </nav>
+        
       </aside>
 
       {/* Main Content */}
@@ -101,14 +114,17 @@ const MasterTeacher = () => {
         {/* Navbar */}
         <header className="bg-white shadow p-4 flex justify-between items-center">
           <h1 className="text-2xl font-bold text-[#333]">Teacher Dashboard</h1>
-          <div className="flex items-center space-x-4">
-           
-            <Link to="/" className="flex items-center">
-              <h1>Home</h1>
+          <div className="flex items-center space-x-6">
+            <Link to="/" className="flex items-center text-[#333] hover:text-[#2c3e50]">
+              <FaHome size={20} />
+              {isSidebarOpen && <span className="ml-2">Home</span>}
             </Link>
-            <Link to="settingadmin" className="flex items-center">
+            <Link
+              to="settingadmin"
+              className="flex items-center space-x-2"
+            >
               <img
-                className="w-10 h-10 rounded-full"
+                className="w-10 h-10 rounded-full border-2 border-[#2c3e50]"
                 src={
                   userInfo.name
                     ? `http://localhost:8080${userInfo.name}`
@@ -116,10 +132,13 @@ const MasterTeacher = () => {
                 }
                 alt="Profile"
               />
+              {isSidebarOpen && <FaCog size={20} className="text-[#333] hover:text-[#2c3e50]" />}
             </Link>
           </div>
         </header>
-        <main className="flex-1 p-6 overflow-y-auto bg-white">
+
+        {/* Main Content Area */}
+        <main className="flex-1 p-6 overflow-y-auto bg-[#f8f9fa]">
           <Outlet />
         </main>
       </div>

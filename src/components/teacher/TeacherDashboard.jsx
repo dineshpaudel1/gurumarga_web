@@ -3,6 +3,7 @@ import { FaBook, FaClipboardList, FaDollarSign, FaUser } from "react-icons/fa";
 import { fetchCourses } from "../../Apis/CourseApi";
 import { fetchEnrolledUserCount } from "../../Apis/EnrollmentApi";
 import { Link } from "react-router-dom";
+import studentImage from "../../assets/rawphoto/logo.png";
 
 const TeacherDashboard = () => {
   const [courseCount, setCourseCount] = useState(0);
@@ -75,6 +76,18 @@ const TeacherDashboard = () => {
             </tr>
           </thead>
           <tbody>
+            <tr className="border-b">
+                  <td className="p-3">1</td>
+                  <td className="p-3 flex items-center">
+                    <img
+                      src={studentImage}
+                      alt=""
+                      className="w-10 h-10 rounded-full mr-3"
+                    />
+                    Dinesh Paudel
+                  </td>
+                  <td className="p-3">Ielts course with grammer</td>
+              </tr>
             {/* {latestEnrollments.length > 0 ? (
               latestEnrollments.map((enrollment, index) => (
                 <tr key={enrollment.id} className="border-b">

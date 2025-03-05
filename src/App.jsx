@@ -23,6 +23,7 @@ import AdminNotification from "./components/admin/AdminNotification";
 import MasterTeacher from "./components/teacher/MasterTeacher";
 import MasterPage from "./components/student/MasterPage";
 import { CourseInfoProvider } from "./context/CourseInfoProvider";
+import AddCourse from "./components/teacher/AddCourse";
 
 function App() {
   return (
@@ -60,6 +61,7 @@ function App() {
               <Route path="settingadmin" element={<SettingAdmin />} />
               <Route path="teachercourse" element={<TeacherCourses />} />
               <Route path="enrolleduser" element={<EnrolledUser />} />
+              <Route path="addcourse" element={<AddCourse />} />
             </Route>
           </Routes>
         </BrowserRouter>
