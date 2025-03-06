@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { signupUser } from "../../Apis/UserApi"; // Import the signup API call
+import { useLocation, useNavigate } from "react-router-dom";
+import { signupUser } from "../../Apis/UserApi";
 
 const Signup = () => {
   const [fullName, setFullName] = useState("");
@@ -10,21 +10,14 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleSignup = async (e) => {
     e.preventDefault();
-
     try {
-      // Calling the API function from UserApi
-      const data = await signupUser(
-        fullName,
-        username,
-        email,
-        contact,
-        password
-      );
+      const data = await signupUser(fullName, username, email, contact, password);
       console.log("Signup successful", data);
-      navigate("/login"); // Redirect to the login page after successful signup
+      navigate("/login"); // Redirect to login after successful signup
     } catch (error) {
       setError(error.message);
       console.error("Error signing up:", error);
@@ -32,132 +25,113 @@ const Signup = () => {
   };
 
   return (
-    <div className="max-w-lg mx-auto mt-[100px] p-8 bg-white rounded-xl shadow-lg">
-      {/* Optional: Add logo or banner */}
-      <div className="text-center mb-6">
-        <h2 className="text-3xl font-semibold text-gray-900 mt-4">Sign Up for GuruMarga</h2>
-      </div>
+    <div className="flex items-center justify-center min-h-screen bg-gray-100 mt-[70px] mb-3">
+      <div className="w-full max-w-sm p-6 bg-white rounded-xl shadow-2xl">
+        <h2 className="text-2xl font-bold text-center text-[#3B3F58] mb-6">
+          Create Your Account
+        </h2>
 
-      <form onSubmit={handleSignup}>
-        <div className="space-y-4">
-          <div className="mb-4">
-            <label
-              htmlFor="fullName"
-              className="block text-sm font-medium text-gray-900"
-            >
+        {error && (
+          <div className="bg-red-100 border border-red-400 text-red-700 px-3 py-2 rounded mb-4 text-sm">
+            {error}
+          </div>
+        )}
+
+        <form onSubmit={handleSignup} className="space-y-4">
+          <div>
+            <label htmlFor="fullName" className="block text-gray-700 font-medium mb-1">
               Full Name
             </label>
             <input
               id="fullName"
-              name="fullName"
               type="text"
-              autoComplete="fullName"
-              required
+              placeholder="Enter your full name"
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
-              className="block w-full p-3 mt-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-600"
+              className="w-full p-2 border border-gray-300 rounded-md bg-[#F0F2F5] focus:outline-none focus:ring-2 focus:ring-[#3B82F6] transition duration-200"
+              required
             />
           </div>
 
-          <div className="mb-4">
-            <label
-              htmlFor="username"
-              className="block text-sm font-medium text-gray-900"
-            >
+          <div>
+            <label htmlFor="username" className="block text-gray-700 font-medium mb-1">
               Username
             </label>
             <input
               id="username"
-              name="username"
               type="text"
-              autoComplete="username"
-              required
+              placeholder="Choose a username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className="block w-full p-3 mt-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-600"
+              className="w-full p-2 border border-gray-300 rounded-md bg-[#F0F2F5] focus:outline-none focus:ring-2 focus:ring-[#3B82F6] transition duration-200"
+              required
             />
           </div>
 
-          <div className="mb-4">
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium text-gray-900"
-            >
+          <div>
+            <label htmlFor="email" className="block text-gray-700 font-medium mb-1">
               Email
             </label>
             <input
               id="email"
-              name="email"
               type="email"
-              autoComplete="email"
-              required
+              placeholder="Enter your email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="block w-full p-3 mt-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-600"
+              className="w-full p-2 border border-gray-300 rounded-md bg-[#F0F2F5] focus:outline-none focus:ring-2 focus:ring-[#3B82F6] transition duration-200"
+              required
             />
           </div>
 
-          <div className="mb-4">
-            <label
-              htmlFor="contact"
-              className="block text-sm font-medium text-gray-900"
-            >
+          <div>
+            <label htmlFor="contact" className="block text-gray-700 font-medium mb-1">
               Contact
             </label>
             <input
               id="contact"
-              name="contact"
               type="text"
-              autoComplete="contact"
-              required
+              placeholder="Enter your contact number"
               value={contact}
               onChange={(e) => setContact(e.target.value)}
-              className="block w-full p-3 mt-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-600"
+              className="w-full p-2 border border-gray-300 rounded-md bg-[#F0F2F5] focus:outline-none focus:ring-2 focus:ring-[#3B82F6] transition duration-200"
+              required
             />
           </div>
 
-          <div className="mb-6">
-            <label
-              htmlFor="password"
-              className="block text-sm font-medium text-gray-900"
-            >
+          <div>
+            <label htmlFor="password" className="block text-gray-700 font-medium mb-1">
               Password
             </label>
             <input
               id="password"
-              name="password"
               type="password"
-              autoComplete="current-password"
-              required
+              placeholder="Create a password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="block w-full p-3 mt-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-600"
+              className="w-full p-2 border border-gray-300 rounded-md bg-[#F0F2F5] focus:outline-none focus:ring-2 focus:ring-[#3B82F6] transition duration-200"
+              required
             />
           </div>
 
-          {error && <div className="text-red-600 text-sm mb-4">{error}</div>}
+          <button
+            type="submit"
+            className="w-full py-2 rounded-md bg-[#3B82F6] hover:bg-[#2563EB] text-white font-semibold transition duration-300 shadow-md"
+          >
+            Sign Up
+          </button>
+        </form>
 
-          <div>
-            <button
-              type="submit"
-              className="w-full bg-indigo-600 text-white rounded-md py-3 font-semibold text-sm shadow-md hover:bg-indigo-500 focus:ring-2 focus:ring-indigo-600 focus:ring-inset"
-            >
-              Sign Up
-            </button>
-          </div>
-        </div>
-      </form>
-
-      <p className="mt-4 text-center text-sm text-gray-600">
-        Already have an account?{" "}
-        <a
-          href="#"
-          className="text-blue-600 hover:underline"
-          onClick={() => navigate("/login")}
-        >
-          Log in
-        </a>
-      </p>
+        <p className="text-center mt-4 text-gray-600 text-sm">
+          Already have an account?{" "}
+          <a
+            href="#"
+            className="text-[#3B82F6] hover:text-[#2563EB] transition duration-200 font-semibold"
+            onClick={() => navigate("/login")}
+          >
+            Log In
+          </a>
+        </p>
+      </div>
     </div>
   );
 };

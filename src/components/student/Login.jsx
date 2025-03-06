@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { loginUser } from "../../Apis/UserApi"; // Importing loginUser function
+import { loginUser } from "../../Apis/UserApi";
+import { FcGoogle } from "react-icons/fc";
+import { FaFacebook } from "react-icons/fa";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -10,24 +12,16 @@ const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-
     try {
-      const data = await loginUser(username, password); // Using the API function from UserApi
-
-      localStorage.setItem("token", data.accessToken); // Save the token in localStorage
-      localStorage.setItem("username", username); // Save the username in localStorage
-
-      navigate("/"); // Redirect to the homepage
-      window.location.reload(); // Reload the page to update the header
+      const data = await loginUser(username, password);
+      localStorage.setItem("token", data.accessToken);
+      localStorage.setItem("username", username);
+      navigate("/");
+      window.location.reload();
     } catch (error) {
       setError(error.message);
       console.error("Error logging in:", error);
-
-      // If the server is down or there is an issue, remove the token from localStorage
-      if (
-        error.message.includes("NetworkError") ||
-        error.message.includes("ECONNREFUSED")
-      ) {
+      if (error.message.includes("NetworkError") || error.message.includes("ECONNREFUSED")) {
         localStorage.removeItem("username");
       }
     }
@@ -39,78 +33,80 @@ const Login = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-[#F9FAFB]">
-      <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-lg">
-        <h2 className="text-3xl font-bold text-center text-[#3B3F58] mb-6">
-          Login
-        </h2>
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-[#F9FAFB] to-[#EFF6FF] mt-10">
+      <div className="w-full max-w-sm p-6 bg-white rounded-xl shadow-2xl">
+        <h2 className="text-2xl font-bold text-center text-[#3B3F58] mb-6">Welcome Back</h2>
 
-        {/* Display Error Messages */}
         {error && (
-          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+          <div className="bg-red-100 border border-red-400 text-red-700 px-3 py-2 rounded mb-4 text-sm">
             {error}
           </div>
         )}
 
-        <form onSubmit={handleLogin}>
-          {/* Username Field */}
-          <div className="mb-4">
-            <label
-              htmlFor="username"
-              className="block text-gray-700 font-medium mb-2"
-            >
+        <form onSubmit={handleLogin} className="space-y-4">
+          <div>
+            <label htmlFor="username" className="block text-gray-700 font-medium mb-1">
               Username
             </label>
             <input
               type="text"
-              name="username"
               id="username"
               placeholder="Enter your username"
-              required
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className="w-full p-3 border border-gray-300 rounded-md bg-[#F0F2F5] focus:outline-none focus:ring-2 focus:ring-[#3B3F58] transition duration-200"
+              className="w-full p-2 border border-gray-300 rounded-md bg-[#F0F2F5] focus:outline-none focus:ring-2 focus:ring-[#3B82F6] transition duration-200"
+              required
             />
           </div>
 
-          {/* Password Field */}
-          <div className="mb-6">
-            <label
-              htmlFor="password"
-              className="block text-gray-700 font-medium mb-2"
-            >
+          <div>
+            <label htmlFor="password" className="block text-gray-700 font-medium mb-1">
               Password
             </label>
             <input
               type="password"
-              name="password"
               id="password"
               placeholder="Enter your password"
-              required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full p-3 border border-gray-300 rounded-md bg-[#F0F2F5] focus:outline-none focus:ring-2 focus:ring-[#3B3F58] transition duration-200"
+              className="w-full p-2 border border-gray-300 rounded-md bg-[#F0F2F5] focus:outline-none focus:ring-2 focus:ring-[#3B82F6] transition duration-200"
+              required
             />
           </div>
 
           <button
             type="submit"
-            className="w-full py-3 rounded-md bg-[#3B82F6] hover:bg-[#2563EB] text-white font-semibold transition duration-300 shadow-md"
+            className="w-full py-2 rounded-md bg-[#3B82F6] hover:bg-[#2563EB] text-white font-semibold transition duration-300 shadow-md"
           >
             Login
           </button>
-
-          <p className="text-center mt-4 text-gray-600">
-            <a
-              href="#"
-              className="text-[#3B3F58] hover:text-gray-500 transition duration-200"
-            >
-              Forgot Password?
-            </a>
-          </p>
         </form>
+<div className="flex items-center my-6">
+          <div className="flex-1 h-px bg-gray-300"></div>
+          <span className="mx-4 text-gray-500">OR</span>
+          <div className="flex-1 h-px bg-gray-300"></div>
+        </div>
+        <div className="flex flex-col space-y-4 mb-6 mt-5">
+          <button
+            className="w-full flex items-center justify-center p-2 border border-gray-300 rounded-md hover:bg-gray-50 transition duration-200"
+            onClick={() => console.log("Login with Google")}
+          >
+            <FcGoogle className="text-xl mr-2" />
+            <span className="text-gray-700 font-medium">Login with Google</span>
+          </button>
 
-        <p className="text-center mt-4 text-gray-600">
+          <button
+            className="w-full flex items-center justify-center p-2 border border-gray-300 rounded-md hover:bg-gray-50 transition duration-200"
+            onClick={() => console.log("Login with Facebook")}
+          >
+            <FaFacebook className="text-xl text-[#1877F2] mr-2" />
+            <span className="text-gray-700 font-medium">Login with Facebook</span>
+          </button>
+        </div>
+
+        
+
+        <p className="text-center mt-4 text-gray-600 text-sm">
           Don't have an account?{" "}
           <a
             href="#"

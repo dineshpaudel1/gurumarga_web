@@ -9,6 +9,7 @@ const CourseDetail = () => {
   const [course, setCourse] = useState(null);
   const [instructor, setInstructor] = useState(null);
   const [recommendedCourses, setRecommendedCourses] = useState([]);
+  const [expandedSections, setExpandedSections] = useState({}); // State to manage dropdown toggle
 
   const handlePrev = () => {
     const container = document.getElementById("recommended-courses-container");
@@ -56,7 +57,49 @@ const CourseDetail = () => {
     }
   };
 
+  // Function to toggle dropdown for a section
+  const toggleSection = (sectionId) => {
+    setExpandedSections((prev) => ({
+      ...prev,
+      [sectionId]: !prev[sectionId], // Toggle the state for the section
+    }));
+  };
+
   if (!course) return <div>Loading...</div>;
+
+  // Static course content data (replace with dynamic data if available)
+  const courseContent = [
+    {
+      id: 1,
+      title: "Section 1: Introduction to Web Development",
+      duration: "1 hour",
+      lectures: [
+        { id: 1, title: "1.1 What is Web Development?", duration: "10 min", preview: true },
+        { id: 2, title: "1.2 Setting Up Your Environment", duration: "15 min", preview: false },
+        { id: 3, title: "1.3 HTML Basics", duration: "20 min", preview: true },
+      ],
+    },
+    {
+      id: 2,
+      title: "Section 2: CSS Fundamentals",
+      duration: "2 hours",
+      lectures: [
+        { id: 4, title: "2.1 Introduction to CSS", duration: "15 min", preview: true },
+        { id: 5, title: "2.2 CSS Selectors", duration: "20 min", preview: false },
+        { id: 6, title: "2.3 Flexbox and Grid", duration: "25 min", preview: true },
+      ],
+    },
+    {
+      id: 3,
+      title: "Section 3: JavaScript Basics",
+      duration: "1.5 hours",
+      lectures: [
+        { id: 7, title: "3.1 Introduction to JavaScript", duration: "15 min", preview: true },
+        { id: 8, title: "3.2 Variables and Data Types", duration: "20 min", preview: false },
+        { id: 9, title: "3.3 Functions and Loops", duration: "25 min", preview: true },
+      ],
+    },
+  ];
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
@@ -168,6 +211,37 @@ const CourseDetail = () => {
                       </button>
                     </div>
                   </div>
+
+                  {/* Course Features Moved to Bottom */}
+                  <div className="bg-gray-50 p-6 rounded-lg mt-8">
+                    <h2 className="text-xl font-bold text-primary mb-4">
+                      What You'll Learn
+                    </h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <ul className="list-disc pl-5">
+                        <li>Full Basic of Web Development</li>
+                        <li>Full Basic of Web Development</li>
+                        <li>Full Basic of Web Development</li>
+                      </ul>
+                      {course.features?.map((feature, index) => (
+                        <div key={index} className="flex items-start space-x-3">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="h-5 w-5 text-green-500 mt-0.5"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                          >
+                            <path
+                              fillRule="evenodd"
+                              d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                              clipRule="evenodd"
+                            />
+                          </svg>
+                          <span>{feature}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
                 </div>
 
                 {/* Instructor Card */}
@@ -233,37 +307,85 @@ const CourseDetail = () => {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
 
-            {/* Course Features */}
-            <div className="bg-gray-50 px-8 py-6 md:px-12">
-              <h2 className="text-xl font-bold text-primary mb-4">
-                What You'll Learn
-              </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <ul className="list-disc pl-5">
-                  <li>Full Basic of Web Development</li>
-                  <li>Full Basic of Web Development</li>
-                  <li>Full Basic of Web Development</li>
-                </ul>
-                {course.features?.map((feature, index) => (
-                  <div key={index} className="flex items-start space-x-3">
+      {/* Course Content Section */}
+      <section className="py-12 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-2xl font-bold text-primary mb-6">Course Content</h2>
+          <div className="bg-gray-50 rounded-lg shadow-md p-6">
+            {/* Course Content List */}
+            {courseContent.map((section) => (
+              <div key={section.id} className="mb-6">
+                {/* Section Header */}
+                <div
+                  className="flex justify-between items-center p-4 bg-white rounded-lg shadow-sm cursor-pointer hover:bg-gray-100"
+                  onClick={() => toggleSection(section.id)}
+                >
+                  <h3 className="text-lg font-semibold text-primary">
+                    {section.title}
+                  </h3>
+                  <div className="flex items-center space-x-4">
+                    <span className="text-sm text-gray-500">
+                      {section.duration}
+                    </span>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      className="h-5 w-5 text-green-500 mt-0.5"
+                      className={`h-5 w-5 text-gray-500 transform transition-transform ${
+                        expandedSections[section.id] ? "rotate-180" : ""
+                      }`}
                       viewBox="0 0 20 20"
                       fill="currentColor"
                     >
                       <path
                         fillRule="evenodd"
-                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
                         clipRule="evenodd"
                       />
                     </svg>
-                    <span>Hello</span>
                   </div>
-                ))}
+                </div>
+
+                {/* Lecture List (Dropdown) */}
+                {expandedSections[section.id] && (
+                  <div className="mt-2 space-y-2">
+                    {section.lectures.map((lecture) => (
+                      <div
+                        key={lecture.id}
+                        className="flex items-center justify-between p-3 bg-white rounded-lg shadow-sm hover:bg-gray-50"
+                      >
+                        <div className="flex items-center space-x-3">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="h-5 w-5 text-gray-400"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                          >
+                            <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                            <path
+                              fillRule="evenodd"
+                              d="M2 10a8 8 0 1116 0 8 8 0 01-16 0zm8-6a6 6 0 100 12 6 6 0 000-12z"
+                              clipRule="evenodd"
+                            />
+                          </svg>
+                          <span className="text-gray-700">{lecture.title}</span>
+                          {lecture.preview && (
+                            <span className="text-xs text-blue-500 bg-blue-50 px-2 py-1 rounded">
+                              Preview
+                            </span>
+                          )}
+                        </div>
+                        <span className="text-sm text-gray-500">
+                          {lecture.duration}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
