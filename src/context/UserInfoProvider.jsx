@@ -8,9 +8,10 @@ export const UserInfoProvider = ({ children }) => {
   const [userInfo, setUserInfo] = useState(null);
   const [role, setRole] = useState("");
   const [id, setId] = useState(null);
+  const [teacherInfo, setTeacherInfo] = useState(null); // New state for teacher info
 
   const token = localStorage.getItem("token");
-
+  
   const fetchUserInfo = async () => {
     if (!token) return; // Prevent API call if no token is found
 
@@ -39,6 +40,30 @@ export const UserInfoProvider = ({ children }) => {
     }
   };
 
+  const fetchTeacherInfo = async () => {
+    if (!token) return; // Prevent API call if no token is found
+
+    try {
+      const response = await fetch(`${BASE_URL}/api/teacher/getInfo`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch teacher info");
+      }
+
+      const data = await response.json();
+      setTeacherInfo(data); // Set teacher info in state
+      localStorage.setItem("teacherid", data.id)
+    } catch (err) {
+      console.error("Error fetching teacher info:", err.message);
+    }
+  };
+
   const checkServer = async () => {
     try {
       const response = await axios.get(`${BASE_URL}/api/users/check`);
@@ -56,10 +81,11 @@ export const UserInfoProvider = ({ children }) => {
 
   useEffect(() => {
     fetchUserInfo();
+    fetchTeacherInfo(); // Fetch teacher info after user info
     checkServer();
   }, [token]);
 
-  const contextValue = [userInfo, fetchUserInfo, role];
+  const contextValue = [userInfo, fetchUserInfo, role, teacherInfo]; // Include teacherInfo in context
 
   return (
     <UserContext.Provider value={contextValue}>{children}</UserContext.Provider>

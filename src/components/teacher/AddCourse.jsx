@@ -1,15 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import CourseContext from "../../context/CourseInfoProvider"; // Adjust the import path as necessary
 
 const AddCourse = () => {
   const [course, setCourse] = useState({
     courseTitle: "",
     courseDescription: "",
-    price: "",
-    thumbnail: "",
-    instructorId: "",
-    language: "",
     category: "",
+    price: "",
+    instructorId: "", // Will be set from localStorage
+    language: "",
   });
+
+  console.log(course)
+
+  const { categoryInfo, addCourse } = useContext(CourseContext); // Fetch categoryInfo and addCourse from context
+
+  useEffect(() => {
+    // Retrieve the instructor ID from localStorage and set it in the state
+    const instructorId = localStorage.getItem("teacherid");
+    if (instructorId) {
+      setCourse((prevCourse) => ({
+        ...prevCourse,
+        instructorId: instructorId,
+      }));
+    }
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -19,10 +34,36 @@ const AddCourse = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Course Data:", course);
-    // Add your logic to submit the course data to the backend
+
+    // Ensure the category field is not empty
+    if (!course.category) {
+      alert("Please select a category.");
+      return;
+    }
+
+    // Retrieve the authentication token from localStorage
+    const token = localStorage.getItem("token");
+
+    try {
+      // Call the addCourse function from the context
+      await addCourse(course, token); // Pass only course data and token
+      alert("Course added successfully!");
+      // Reset the form (except instructorId)
+      setCourse({
+        courseTitle: "",
+        courseDescription: "",
+        category: "",
+        price: "",
+        instructorId: course.instructorId, // Keep the instructorId from localStorage
+        language: "",
+      });
+    } catch (error) {
+      console.error("Error adding course:", error);
+      alert("Error adding course. Please try again.");
+    }
   };
 
   return (
@@ -81,40 +122,6 @@ const AddCourse = () => {
             />
           </div>
 
-          {/* Thumbnail URL */}
-          <div className="mb-6">
-            <label htmlFor="thumbnail" className="block text-sm font-medium text-gray-700 mb-1">
-              Thumbnail URL
-            </label>
-            <input
-              type="url"
-              id="thumbnail"
-              name="thumbnail"
-              value={course.thumbnail}
-              onChange={handleChange}
-              placeholder="Enter thumbnail URL"
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              required
-            />
-          </div>
-
-          {/* Instructor ID */}
-          <div className="mb-6">
-            <label htmlFor="instructorId" className="block text-sm font-medium text-gray-700 mb-1">
-              Instructor ID
-            </label>
-            <input
-              type="text"
-              id="instructorId"
-              name="instructorId"
-              value={course.instructorId}
-              onChange={handleChange}
-              placeholder="Enter instructor ID"
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              required
-            />
-          </div>
-
           {/* Language */}
           <div className="mb-6">
             <label htmlFor="language" className="block text-sm font-medium text-gray-700 mb-1">
@@ -132,21 +139,26 @@ const AddCourse = () => {
             />
           </div>
 
-          {/* Category */}
+          {/* Category Dropdown */}
           <div className="mb-6">
             <label htmlFor="category" className="block text-sm font-medium text-gray-700 mb-1">
               Category
             </label>
-            <input
-              type="text"
+            <select
               id="category"
               name="category"
               value={course.category}
               onChange={handleChange}
-              placeholder="Enter course category"
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               required
-            />
+            >
+              <option value="">Select a category</option>
+              {categoryInfo && categoryInfo.map((category) => (
+                <option key={category.id} value={category.Name}>
+                  {category.categoryName}
+                </option>
+              ))}
+            </select>
           </div>
 
           {/* Submit Button */}

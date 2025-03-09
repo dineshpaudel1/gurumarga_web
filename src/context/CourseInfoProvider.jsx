@@ -44,16 +44,15 @@ export const CourseInfoProvider = ({ children }) => {
     }
   };
 
-  const addCourse = async (courseData, thumbnail, accessToken) => {
-    const formData = new FormData();
-    formData.append("course", JSON.stringify(courseData));
-    formData.append("file", thumbnail);
-
+  const addCourse = async (course, token) => {
     try {
-      const response = await fetch(`${BASE_URL}/teacher/add`, {
+      const response = await fetch(`${BASE_URL}/teacher/addCourse`, {
         method: "POST",
-        headers: { Authorization: `Bearer ${accessToken}` },
-        body: formData,
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(course), // Send course data as JSON
       });
 
       if (!response.ok) {
@@ -61,9 +60,10 @@ export const CourseInfoProvider = ({ children }) => {
       }
 
       const newCourse = await response.json();
-      setCourses([...courses, newCourse]);
+      setCourses([...courses, newCourse]); // Update the courses state with the new course
     } catch (error) {
       console.error("Error adding course:", error);
+      throw error; // Re-throw the error to handle it in the component
     }
   };
 
@@ -105,6 +105,7 @@ export const CourseInfoProvider = ({ children }) => {
     try {
       const response = await axios.get(`${BASE_URL}/users/category`);
       setCategoryInfo(response.data);
+      console.log(response.data);
     } catch (error) {
       console.error("Error fetching categories:", error);
     }
